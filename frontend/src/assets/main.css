@@ -1,35 +1,75 @@
 @import './base.css';
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+@layer base {
+  /* inter var - latin */
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 100 900;
+    src: url('/fonts/inter-var-latin.woff2') format('woff2');
   }
-}
 
-@media (min-width: 1024px) {
+  h1 {
+    @apply text-2xl font-bold md:text-4xl;
+  }
+
+  h2 {
+    @apply text-xl font-bold md:text-3xl;
+  }
+
+  h3 {
+    @apply text-lg font-bold md:text-2xl;
+  }
+
+  h4 {
+    @apply text-base font-bold md:text-lg;
+  }
+
+  p {
+    @apply text-sm text-slate-600 md:text-base;
+  }
+
   body {
-    display: flex;
-    place-items: center;
+    @apply text-sm md:text-base;
   }
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+  .bg-dark a.custom-link {
+    @apply border-gray-200 hover:border-gray-200/0;
   }
+
+  pre {
+    @apply text-xs;
+  }
+}
+
+/* ------------------------------------------
+Transition styles for <transition />
+--------------------------------------------- */
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  /* transform: translateY(-20px); */
+}
+
+.lightfadeleft-enter-active,
+.lightfadeleft-leave-active {
+  transition: all 0.3s ease-in-out;
+  overflow-x: hidden;
+  opacity: 0.7;
+}
+
+.lightfadeleft-enter-from,
+.lightfadeleft-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
 }
