@@ -1,3 +1,5 @@
 {
-    "input_1": "echo 'hello world' > out.txt"
+    "input_folder": "data",
+    "min_cells": 3,
+    "min_features": 100
 }
