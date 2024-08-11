@@ -19,17 +19,24 @@ ls -al "${INPUT_FOLDER}"
 
 # Parse input parameters
 # Assuming these are passed as environment variables by osparc
-OUTPUT_PREFIX="${OUTPUT_PREFIX:-}"
-MIN_CELLS="${MIN_CELLS:-3}"
-MIN_FEATURES="${MIN_FEATURES:-200}"
-
+INPUT_FILE="${INPUT_FILE:-}"
+SPECIES="${SPECIES:-Homo sapiens}"
+MSIGDB_CATEGORY="${MSIGDB_CATEGORY:-H}"
+MIN_PCT="${MIN_PCT:-0.25}"
+LOGFC_THRESHOLD="${LOGFC_THRESHOLD:-0.25}"
+GSEA_MIN_SIZE="${GSEA_MIN_SIZE:-15}"
+GSEA_MAX_SIZE="${GSEA_MAX_SIZE:-500}"
 
 # Run the R script with command line arguments
 Rscript /home/${SC_USER_NAME}/gsea_analysis.R \
   --input "$INPUT_FOLDER/$INPUT_FILE" \
   --output "$OUTPUT_FOLDER" \
   --species "$SPECIES" \
-  --category "$MSIGDB_CATEGORY"
+  --category "$MSIGDB_CATEGORY" \
+  --min_pct "$MIN_PCT" \
+  --logfc_threshold "$LOGFC_THRESHOLD" \
+  --gsea_min_size "$GSEA_MIN_SIZE" \
+  --gsea_max_size "$GSEA_MAX_SIZE"
 
 # Zip all output files
 cd "$OUTPUT_FOLDER"

@@ -18,7 +18,15 @@ option_list <- list(
   make_option(c("-s", "--species"), type="character", default="Homo sapiens",
               help="Species for gene set database", metavar="character"),
   make_option(c("-c", "--category"), type="character", default="H",
-              help="MSigDB category", metavar="character")
+              help="MSigDB category", metavar="character"),
+  make_option(c("--min_pct"), type="numeric", default=0.25,
+              help="Minimum percentage for FindAllMarkers", metavar="numeric"),
+  make_option(c("--logfc_threshold"), type="numeric", default=0.25,
+              help="Log FC threshold for FindAllMarkers", metavar="numeric"),
+  make_option(c("--gsea_min_size"), type="integer", default=15,
+              help="Minimum size of gene sets for GSEA", metavar="integer"),
+  make_option(c("--gsea_max_size"), type="integer", default=500,
+              help="Maximum size of gene sets for GSEA", metavar="integer")
 )
 
 # Parse command line arguments
@@ -57,7 +65,9 @@ seurat_object <- FindNeighbors(seurat_object)
 seurat_object <- FindClusters(seurat_object)
 
 # Run differential expression
-markers <- FindAllMarkers(seurat_object, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+markers <- FindAllMarkers(seurat_object, only.pos = TRUE,
+                          min.pct = opt$min_pct,
+                          logfc.threshold = opt$logfc_threshold)
 
 # Prepare ranked gene list
 ranked_genes <- markers %>%
@@ -78,8 +88,8 @@ results <- lapply(unique(ranked_genes$cluster), function(cluster) {
 
   fgseaRes <- fgsea(pathways = split(msigdb_gsets$gene_symbol, msigdb_gsets$gs_name),
                     stats = cluster_genes,
-                    minSize = 15,
-                    maxSize = 500)
+                    minSize = opt$gsea_min_size,
+                    maxSize = opt$gsea_max_size)
 
   fgseaRes$cluster <- cluster
   return(fgseaRes)

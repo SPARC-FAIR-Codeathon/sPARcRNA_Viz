@@ -28,6 +28,30 @@ inputs:
     description: Category of gene sets to use from MSigDB (e.g., "H" for hallmark gene sets)
     type: string
     defaultValue: "H"
+  min_pct:
+    displayOrder: 4
+    label: Minimum Percentage
+    description: Minimum percentage of cells expressing the gene for FindAllMarkers
+    type: number
+    defaultValue: 0.25
+  logfc_threshold:
+    displayOrder: 5
+    label: Log FC Threshold
+    description: Log fold-change threshold for FindAllMarkers
+    type: number
+    defaultValue: 0.25
+  gsea_min_size:
+    displayOrder: 6
+    label: GSEA Minimum Gene Set Size
+    description: Minimum size of gene sets to consider in GSEA
+    type: integer
+    defaultValue: 15
+  gsea_max_size:
+    displayOrder: 7
+    label: GSEA Maximum Gene Set Size
+    description: Maximum size of gene sets to consider in GSEA
+    type: integer
+    defaultValue: 500
 outputs:
   gsea_results:
     displayOrder: 1
