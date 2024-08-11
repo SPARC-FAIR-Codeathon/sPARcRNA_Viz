@@ -1,5 +1,5 @@
 name: Osparc Differential Expression
-key: simcore/services/comp/osparc-differential-expression
+key: simcore/services/comp/dex
 type: computational
 integration-version: 1.0.0
 version: 0.1.0

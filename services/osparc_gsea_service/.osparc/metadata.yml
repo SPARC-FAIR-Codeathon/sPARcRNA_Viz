@@ -1,0 +1,38 @@
+name: Osparc Gene Set Enrichment Analysis
+key: simcore/services/comp/osparc-gsea
+type: computational
+integration-version: 1.0.0
+version: 0.1.0
+description: Perform Gene Set Enrichment Analysis on processed scRNA-seq data using MSigDB gene sets
+contact: msamdars@stanford.edu
+thumbnail: https://github.com/ITISFoundation/osparc-assets/blob/cb43207b6be2f4311c93cd963538d5718b41a023/assets/default-thumbnail-cookiecutter-osparc-service.png?raw=true
+authors:
+  - name: Mihir Samdarshi
+    email: msamdars@stanford.edu
+    affiliation: Stanford University School of Medicine, Division of Cardiovascular Medicine
+inputs:
+  input_file:
+    displayOrder: 1
+    label: Input AnnData File
+    description: Processed scRNA-seq data in AnnData format (.h5ad)
+    type: data:application/x-hdf5
+  species:
+    displayOrder: 2
+    label: Species
+    description: Species for gene set database (e.g., "Homo sapiens", "Mus musculus")
+    type: string
+    defaultValue: "Homo sapiens"
+  msigdb_category:
+    displayOrder: 3
+    label: MSigDB Category
+    description: Category of gene sets to use from MSigDB (e.g., "H" for hallmark gene sets)
+    type: string
+    defaultValue: "H"
+outputs:
+  gsea_results:
+    displayOrder: 1
+    label: GSEA Results
+    description: Zipped file containing GSEA results (CSV) and enrichment plots (PNG)
+    type: data:application/zip
+    fileToKeyMap:
+      gsea_results.zip: gsea_results

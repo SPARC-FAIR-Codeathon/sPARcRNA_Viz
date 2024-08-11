@@ -24,7 +24,7 @@ MIN_CELLS="${MIN_CELLS:-3}"
 MIN_FEATURES="${MIN_FEATURES:-200}"
 
 # Run the R script with command line arguments
-Rscript /home/${SC_USER_NAME}/DEx.R \
+Rscript /home/${SC_USER_NAME}/dex.R \
   --input "$INPUT_FOLDER" \
   --output "$OUTPUT_FOLDER" \
   --prefix "$OUTPUT_PREFIX" \

@@ -42,8 +42,8 @@ RUN pip3 install anndata
 
 # ------------------------------------------------------------------------------------
 # Copy and set up R script
-COPY --chown=${SC_USER_NAME}:${SC_USER_NAME} src/DEx.R /home/${SC_USER_NAME}/DEx.R
-RUN chmod +x /home/${SC_USER_NAME}/DEx.R
+COPY --chown=${SC_USER_NAME}:${SC_USER_NAME} src/dex.R /home/${SC_USER_NAME}/dex.R
+RUN chmod +x /home/${SC_USER_NAME}/dex.R
 # ------------------------------------------------------------------------------------
 
 # --------------------------------- Final setup  --------------------------------------
