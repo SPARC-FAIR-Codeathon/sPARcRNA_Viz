@@ -1,0 +1,43 @@
+name: Osparc Differential Expression
+key: simcore/services/comp/osparc-differential-expression
+type: computational
+integration-version: 1.0.0
+version: 0.1.0
+description: Generate differential expression results from scRNA-seq data in OSparc, output as AnnData
+contact: msamdars@stanford.edu
+thumbnail: https://github.com/ITISFoundation/osparc-assets/blob/cb43207b6be2f4311c93cd963538d5718b41a023/assets/default-thumbnail-cookiecutter-osparc-service.png?raw=true
+authors:
+  - name: Mihir Samdarshi
+    email: msamdars@stanford.edu
+    affiliation: Stanford University School of Medicine, Division of Cardiovascular Medicine
+inputs:
+  input_folder:
+    displayOrder: 1
+    label: Input Folder
+    description: Folder containing scRNA-seq data (matrix.mtx, features.tsv, barcodes.tsv)
+    type: data:*/*
+  output_prefix:
+    displayOrder: 2
+    label: Output Prefix
+    description: Prefix for output files (optional)
+    type: string
+  min_cells:
+    displayOrder: 3
+    label: Minimum Cells
+    description: Minimum number of cells expressing a gene
+    type: integer
+    defaultValue: 3
+  min_features:
+    displayOrder: 4
+    label: Minimum Features
+    description: Minimum number of features (genes) per cell
+    type: integer
+    defaultValue: 200
+outputs:
+  output_file:
+    displayOrder: 1
+    label: Processed Data
+    description: Zipped file containing processed scRNA-seq data (AnnData objects) and metadata
+    type: data:application/zip
+    fileToKeyMap:
+      final_output.zip: output_file

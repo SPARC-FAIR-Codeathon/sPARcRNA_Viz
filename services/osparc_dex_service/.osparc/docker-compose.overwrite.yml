@@ -1,0 +1,5 @@
+version: "3.7"
+services:
+  osparc_dex_service:
+    build:
+      dockerfile: docker/Dockerfile
