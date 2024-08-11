@@ -92,9 +92,9 @@ for (group in file_groups) {
   # Perform basic QC
   seurat_object[["percent.mt"]] <- PercentageFeatureSet(seurat_object, pattern = "^MT-")
   
-  # Normalize data
+  # Normalize and identify variable features
   seurat_object <- NormalizeData(seurat_object)
-  
+
   # Find variable features
   seurat_object <- FindVariableFeatures(seurat_object, selection.method = "vst", nfeatures = 2000)
   
@@ -105,18 +105,72 @@ for (group in file_groups) {
   # Perform PCA
   seurat_object <- RunPCA(seurat_object, features = VariableFeatures(object = seurat_object))
   
-  # Convert Seurat object to AnnData
-  counts_matrix <- GetAssayData(seurat_object, slot = "counts")
-  adata <- anndata$AnnData(X = t(as.matrix(counts_matrix)),
-                           obs = seurat_object@meta.data,
-                           var = data.frame(gene = rownames(counts_matrix), 
-                                            row.names = rownames(counts_matrix)))
-  
-  # Save the AnnData object
-  output_file <- file.path(opt$output, paste0(group$prefix, "_processed.h5ad"))
-  adata$write_h5ad(output_file)
-  
-  output_files[[group$prefix]] <- basename(output_file)
+  seurat_object <- FindVariableFeatures(seurat_object)
+
+  # Scale data and run PCA
+  seurat_object <- ScaleData(seurat_object)
+  seurat_object <- RunPCA(seurat_object)
+
+  # Cluster the cells
+  seurat_object <- FindNeighbors(seurat_object)
+  seurat_object <- FindClusters(seurat_object)
+
+  # Run differential expression
+  markers <- FindAllMarkers(seurat_object, only.pos = TRUE,
+                            min.pct = opt$min_pct,
+                            logfc.threshold = opt$logfc_threshold)
+
+  # Prepare ranked gene list
+  ranked_genes <- markers %>%
+    group_by(cluster) %>%
+    arrange(desc(avg_log2FC)) %>%
+    select(gene, avg_log2FC)
+
+  # Get gene sets
+  msigdb_gsets <- msigdbr(species = opt$species, category = opt$category) %>%
+    select(gs_name, gene_symbol) %>%
+    as.data.frame()
+
+  # Run GSEA for each cluster
+  results <- lapply(unique(ranked_genes$cluster), function(cluster) {
+    cluster_genes <- ranked_genes %>%
+      filter(cluster == !!cluster) %>%
+      deframe()
+
+    fgseaRes <- fgsea(pathways = split(msigdb_gsets$gene_symbol, msigdb_gsets$gs_name),
+                      stats = cluster_genes,
+                      minSize = opt$gsea_min_size,
+                      maxSize = opt$gsea_max_size)
+
+    fgseaRes$cluster <- cluster
+    return(fgseaRes)
+  })
+
+  # Combine results
+  all_results <- do.call(rbind, results)
+
+  # Save results
+  write.csv(all_results, file.path(opt$output, "gsea_results.csv"), row.names = FALSE)
+
+  # Plot top pathways for each cluster
+  for (cluster in unique(all_results$cluster)) {
+    cluster_results <- all_results %>%
+      filter(cluster == !!cluster) %>%
+      arrange(pval) %>%
+      head(20)
+
+    p <- ggplot(cluster_results, aes(reorder(pathway, NES), NES)) +
+      geom_col(aes(fill=pval)) +
+      coord_flip() +
+      labs(x="Pathway", y="Normalized Enrichment Score",
+           title=paste("Top Pathways for Cluster", cluster)) +
+      theme_minimal()
+
+    ggsave(file.path(opt$output, paste0("gsea_plot_cluster_", cluster, ".png")), p, width = 10, height = 8)
+  }
+
+  print("GSEA analysis complete. Results saved in the output directory.")
+
   print(paste("AnnData object saved as", output_file))
 }
 
