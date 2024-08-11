@@ -10,7 +10,9 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "dev:serve": "run-p dev dev:server",
+    "dev:server": "tsx ./server.ts"
   },
   "dependencies": {
     "consola": "^3.2.3",
@@ -22,6 +24,8 @@
     "vue-router": "^4.3.3"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@hapi/hapi": "^21.3.10",
     "@rushstack/eslint-patch": "^1.8.0",
     "@tsconfig/node20": "^20.1.4",
     "@types/d3": "^7.4.3",
@@ -44,6 +48,7 @@
     "postcss": "^8.4.41",
     "prettier": "^3.2.5",
     "tailwindcss": "^3.4.9",
+    "tsx": "^4.17.0",
     "typescript": "~5.4.0",
     "unplugin-auto-import": "^0.18.2",
     "unplugin-vue-components": "^0.27.3",
