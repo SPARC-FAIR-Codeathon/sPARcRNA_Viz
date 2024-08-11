@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
@@ -8,13 +7,11 @@ import HelloWorld from './components/HelloWorld.vue'
     <n-dialog-provider>
       <n-message-provider>
         <n-space vertical size="large">
-          <n-layout-content class="view h-[calc(100vh-56px)] py-4 pl-6">
-            <router-view v-slot="{ Component }">
-              <transition name="fade" appear mode="out-in">
-                <component :is="Component" />
-              </transition>
-            </router-view>
-          </n-layout-content>
+          <router-view v-slot="{ Component }">
+            <transition name="fade" appear mode="out-in">
+              <component :is="Component" />
+            </transition>
+          </router-view>
         </n-space>
       </n-message-provider>
     </n-dialog-provider>
