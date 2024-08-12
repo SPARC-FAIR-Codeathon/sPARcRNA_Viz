@@ -43,7 +43,7 @@ endef
 
 
 .PHONY: build build-devel build-nc build-devel-nc
-build build-devel build-nc build-devel-nc: VERSION docker-compose.yml service.cli ## builds image
+build build-devel build-nc build-devel-nc: VERSION docker-compose.yml service.cli/run ## builds image
 	# building image local/${DOCKER_IMAGE_NAME}...
 	@$(call _docker_compose_build)
 
