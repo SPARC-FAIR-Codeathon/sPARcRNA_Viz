@@ -13,7 +13,7 @@
   - [Background](#background)
   - [Importance of FAIR Data Principles](#importance-of-fair-data-principles)
   - [Current SPARC Portal Tools](#current-sparc-portal-tools)
-  - [Challenge Encountered](#challenge-encountered)
+  - [The Problem:](#challenge-encountered)
   - [Our Solution: sPARcRNA_Viz](#our-solution-sparcrna_Viz)
   - [FAIR-Centered Design](#fair-centered-design)
   - [Future Vision](#future-vision)
@@ -66,7 +66,18 @@ The SPARC Portal currently hosts a rich collection of scRNA-seq data across seve
 t-distributed Stochastic Neighbor Embedding (t-SNE) is a plotting and visualization technique that focuses on pairwise similarities among datasets. Like PCA, it is a dimensionality reduction technique. For its utility in comparing large, complex datasets, t-SNE is commonly employed by RNA-seq researchers.
 ### About GSEA
 Gene Set Enrichment Analysis (GSEA) is a popular technique for determining statistically significant genes, as well as those that are upregulated and downregulated. This is achieved through a ranking system whereby genes are organized by statistically significance.
-## Importance of FAIR Data Principles
+
+## Current SPARC Portal Tools
+As of 8/12/24, the [Transcriptomic_oSPARC](https://github.com/SPARC-FAIR-Codeathon/Transcriptomic_oSPARC) utility would appear to be the most prominent SPARC tool relating to the analysis gene expression. This tool is very effective in displaying industry-standard static graphical outputs, which can prove quite useful to researchers. However, a limitation may perhaps exist in the current customization level; it may be necessary to edit the code itself to change particular parameters. There was also a niche to explore in adding interactivity to the graphs, further enahncing the user experience.
+## The Problem:
+The gene expression data in SPARC is somewhat limited and is in a raw data format, making it not as interoperable. Our goal was to make it more interoperable and easy to use. Therefore, our team sought to create a RNA-seq visualization utility that supports the specification of **specific parameters**, as well as **interactivity**. There was also room for experimentation in predicting gene ontology with **GSEA**.
+## Our Solution: sPARcRNA_Viz
+To address this challenge, we present **sPARcRNA_Viz**, an scRNA-seq visualization tool for potential entry alongside Transcriptomic_oSPARC. In incorporating flexible parameters, interactivity, and an additional DEA metric, sPARcRNA_Viz will complement Transcriptomic_oSPARC as part of a growing SPARC gene expression toolkit.
+### sPARcRNA_Viz Pipeline
+
+
+## FAIR-Centered Design
+Perhaps the **most important** aspect of sPARcRNA_Viz is its emphasis on the FAIR Data Principles. Summarized below are highlight features of sPARcRNA_Viz supporting the FAIR initiative. ## Importance of FAIR Data Principles
 <p align="left">
   <img width="576" alt="Screenshot 2024-08-12 at 9 58 14 AM" src=https://github.com/user-attachments/assets/fc0112ba-ac4e-41fe-92ac-65e5339a6eb7>
 </p>
@@ -74,18 +85,6 @@ Gene Set Enrichment Analysis (GSEA) is a popular technique for determining stati
 FAIR data is that which is **F**indable, **A**ccessible, **I**nteroperable, and **R**eusable. These tenets are highly important within the scientific context as a lack of clarity surrounding data may introduce confounding variables. Thus, the FAIR system was derived so as to create a method to organize data, thus serving both present and future researchers.
 <br></br>
 Particularly in the case of scRNA-seq data, which is expensive from both a wet and dry lab standpoint, it is very useful to adhere to FAIR standards. For instance, one particularly common phenomemon with respect to scRNA-seq is **dropout**, where portions of RNA are not captured by experimental techniques. scRNA-seq data can also be signficantly varied with regard to format; often, differently-labeled matrices may contain raw counts data, or data that has been normalized by a method such as CPM, TPM, or RPKM/FPKM. The FAIR article cited on the SPARC website expands upon this idea further: the licensing of data can also pose a challenge for the analysis of gene regulation and expression. Therefore, the intentional **categorization and stewardship** of data can present a major benefit to transcriptomics researchers, propelling scientific progress.
-
-## Current SPARC Portal Tools
-As of 8/12/24, the Transcriptomic_oSPARC utility would appear to be the most prominent SPARC tool relating to the analysis gene expression. This tool is very effective in displaying industry-standard static graphical outputs, which can prove quite useful to researchers. However, a limitation may perhaps exist in the current customization level; it may be necessary to edit the code itself to change particular parameters. There was also a niche to explore in adding interactivity to the graphs, further enahncing the user experience.
-## Challenge Encountered
-Therfore, our team sought to create a RNA-seq visualization utility that supports the specification of **specific parameters**, as well as **interactivity**. There was also room for experimentation in predicting gene ontology with **GSEA**.
-## Our Solution: sPARcRNA_Viz
-To address this challenge, we present **sPARcRNA_Viz**, an scRNA-seq visualization tool for potential entry alongside Transcriptomic_oSPARC. In incorporating flexible parameters, interactivity, and an additional DEA metric, sPARcRNA_Viz will complement Transcriptomic_oSPARC as part of a growing SPARC gene expression toolkit.
-### sPARcRNA_Viz Pipeline
-Would love input here if possible
-Can make a diagram once the pipeline is establshed
-## FAIR-Centered Design
-Perhaps the **most important** aspect of sPARcRNA_Viz is its emphasis on the FAIR Data Principles. Summarized below are highlight features of sPARcRNA_Viz supporting the FAIR initiative.
 
 ### Summary of FAIR Principles Application
 | FAIR Principle | Other Tools | sPARcRNA_Viz |
@@ -96,48 +95,18 @@ Perhaps the **most important** aspect of sPARcRNA_Viz is its emphasis on the FAI
 | **R**eusable | May only support the formatting of one dataset | sPARcRNA_Viz be used with multiple datasets due to the ability to specify parameters. Likewise, sPARcRNA_Viz offers a security benefit through its use of input validation |
 
 Additional information surrounding these applications is detailed in the sPARcRNA_Viz FAIR Practices document found [here](#fair-practices).
-## Future Vision
-Maybe we could add what could be the future of sPARcRNA_Viz here (maybe add different graphs, api calls, etc)
-Would welcome any input here
 # Using sPARcRNA_Viz
+
 ## sPARcRNA_Viz Requirements
 - GNU Make
 - Python3
 - [``Docker``](https://docs.docker.com/get-docker/) (if you wish to build and test the service locally)
 ### Required Input Format
-sPARcRNA_Viz currently supports JSON and .csv single-cell matrices.
+sPARcRNA_Viz currently supports .csv/.tsv (barcode and feature files), .mtx (matrix file) single-cell matrices. These formats and 3 files are required to run the analysis successfully.
+*confirm*
 <br></br>
-Is this correct? Do we have a specific input format in terms of the matrix
 ## sPARcRNA_Viz Workflow
-### Create the Service
-1. The [Dockerfile](osparc_dex_service/docker/Dockerfile) shall be modified to install the command-line tool you'd like to execute and additional dependencies
-All the rest is optional:
-1. The [.osparc](.osparc) is the configuration folder and source of truth for metadata: describes service info and expected inputs/outputs of the service. If you need to change the inputs/outputs of the service, description, thumbnail, etc... check the [`metadata.yml`](./.osparc/metadata.yml) file
-2. If you need to change the start-up behavior of the service, modify the [`service.cli/execute.sh`](./service.cli/execute.sh) file
-Testing: 
-1. The service docker image may be built with ``make build`` (see "Useful Commands" below)
-2. The service docker image may be run locally with ``make run-local``. You'll need to edit the [input.json](./validation/input/inputs.json) to execute your command.
-### Publish the Service on o²S²PARC
-Once you're happy with your code:
-1. Push it to a public repository.
-2. An automated pipeline (GitHub Actions) will build the Docker image for you
-3. Wait for the GitHub pipeline to run successfully
-4. Check that the automated pipeline executes successfully
-5. Once the pipeline has run successfully, get in touch with [o²S²PARC Support](mailto:support@osparc.io), we will take care of the final steps!
-### Change the Service (after it has been published on o²S²PARC)
-If you wish to change your Service (e.g. add additional libraries), after it has been published on o²S²PARC, you have to **create a new version**:
-1. Go back to your repository
-2. Apply the desired changes and commit them
-3. Increase ("bump") the Service version: in your console execute: ``make version-patch``, or ``make version-minor``, or  ``make version-major``
-4. Commit and push the changes to your repository
-5. Wait for the GitHub/GitLab pipelines to run successfully
-5. Once the pipeline has run successfully, get in touch with [o²S²PARC Support](mailto:support@osparc.io), we will take care of publishing the new version!
-### Useful Commands
-```
-$ make help
-$ make build # This will build an o²S²PARC-compatible image (similar to `Docker build` command)
-$ make run-local # This will start a new Docker container on your computer and run the command.
-```
+
 ## Configuring sPARcRNA_Viz
 sPARcRNA_Viz offers a variety of `make` options:
 | Option | Description | Default |
@@ -158,15 +127,18 @@ sPARcRNA_Viz offers a variety of `make` options:
 ## Tutorial
 - Maybe some kind of tutorial if applicable and we have extra time
 - This could possibly consist of sample inputs
+
+## Future Vision
+sPARcRNA_Viz would be expanded to include other interactive visualizations and API calls to other gene databases. This would provide more ways to analyze genes and integrate with other websites.
 # Additional Information
 ## Issue Reporting
 Please utilize the **Issues** tab of this repository should you encounter any problems with sPARcRNA_Viz.
 ## How to Contribute
-Info here
+Fork this repository and submit a pull request to contribute.
 ## Cite Us
 - All of the winning projects included a citation
 ## License
-- All of the winning projects included a license
+- sPARcRNA_Viz is distributed under the MIT License.
 ## FAIR Practices
 sPARcRNA_Viz is designed around the use of FAIR Practices. Further explanation as to FAIR Principle adherence is included in this [document](https://docs.google.com/document/d/1Me_6LzF9eMdD2Bhh9df7ncxRGepV7pU6kBUjl15Dyhw/edit?usp=sharing).
 ## Team
