@@ -16,6 +16,7 @@
   - [Challenge Encountered](#challenge-encountered)
   - [Our Solution: sPARcRNA_Viz](#our-solution-sparcrna_viz)
   - [FAIR-Centered Design](#fair-centered-design)
+  - [Future Vision](#future-vision)
 - [Using sPARcRNA_Viz](#using-sparcrna_viz)
   - [sPARcRNA_Viz Requirements](#sparcrna_viz-requirements)
   - [sPARcRNA_Viz Workflow](#sparcrna_viz-workflow)
@@ -85,18 +86,18 @@ To address this challenge, we present **sPARcRNA_Viz**, an scRNA-seq visualizati
 Would love input here if possible
 Can make a diagram once the pipeline is establshed
 ## FAIR-Centered Design
-Perhaps the most important aspect of sPARcRNA_Viz is its emphasis on the FAIR Data Principles. Summarized below are highlight features of sPARcRNA_Viz supporting the FAIR initiative.
+Perhaps the **most important** aspect of sPARcRNA_Viz is its emphasis on the FAIR Data Principles. Summarized below are highlight features of sPARcRNA_Viz supporting the FAIR initiative.
 
 ### Summary of FAIR Principles Application
 | FAIR Principle | Other Tools | sPARcRNA_Viz |
 | --- | --- | --- |
-| **F**indable | May not be connected to an existing database such as the SPARC Portal, which could hinder the findability of data. | sPARcRNA_Viz is connected to o²S²PARC, so it can use the well-organized datasets provided on the SPARC portal |
+| **F**indable | May not be connected to an existing database such as the SPARC Portal, which could hinder the findability of data | sPARcRNA_Viz is connected to o²S²PARC, so it can use the well-organized datasets provided on the SPARC portal |
 | **A**ccessible | May have a user interface that requires a programming background | sPARcRNA_Viz's friendly user interface and visuals allow researchers to quickly engage with data |
 | **I**nteroperable | May not allow for connections between datasets | Through its use of GSEA, sPARcRNA_Viz allows for the meaningful connection of datasets: scRNA-seq data can be used in association with gene ontology. In addition |
 | **R**eusable | May only support the formatting of one dataset | sPARcRNA_Viz be used with multiple datasets due to the ability to specify parameters. Likewise, sPARcRNA_Viz offers a security benefit through its use of input validation |
 
 Additional information surrounding these applications is detailed in the sPARcRNA_Viz FAIR Practices document found [here](#fair-practices).
-## Our Vision
+## Future Vision
 Maybe we could add what could be the future of sPARcRNA_Viz here (maybe add different graphs, api calls, etc)
 Would welcome any input here
 # Using sPARcRNA_Viz
