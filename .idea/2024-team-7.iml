@@ -9,6 +9,7 @@
       <excludeFolder url="file://$MODULE_DIR$/.venv/lib" />
       <excludeFolder url="file://$MODULE_DIR$/tmp_output" />
       <excludeFolder url="file://$MODULE_DIR$/src/frontend/.vscode" />
+      <excludeFolder url="file://$MODULE_DIR$/src/astro/.vscode" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
