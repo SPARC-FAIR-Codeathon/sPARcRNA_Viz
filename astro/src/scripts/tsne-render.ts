@@ -4,26 +4,26 @@ import DATA_JSON from "../data/tsne_data.json";
 
 const dataJson = DATA_JSON;
 
-const categories: { color: string; cluster: string }[] = [];
-
-const generateCategoryColors = () => {
-  dataJson.forEach((element: any) => {
-    if (!categories.find((category) => category.cluster === element.cluster)) {
-      categories.push({
-        color: faker.color.human(),
-        cluster: element.cluster,
-      });
-    }
-  });
-};
-generateCategoryColors();
-
-const getCategoryColor = (category: string) => {
-  const categoryIndex = categories.findIndex(
-    (element) => element.cluster === category
-  );
-  return categories[categoryIndex].color;
-};
+const baseColors = [
+  "#FF0000",
+  "#00FF00",
+  "#0000FF",
+  "#FFFF00",
+  "#FF00FF",
+  "#00FFFF",
+  "#800000",
+  "#008000",
+  "#000080",
+  "#808000",
+  "#800080",
+  "#008080",
+  "#FFA500",
+  "#FFC0CB",
+  "#A52A2A",
+  "#DDA0DD",
+  "#20B2AA",
+  "#B8860B",
+];
 
 const drawSVG = () => {
   const container = document.getElementById("chart");
@@ -32,8 +32,10 @@ const drawSVG = () => {
     throw new Error("chart element not found");
   }
 
+  const containerWidth = container.offsetWidth;
+
   const margin = { bottom: 40, left: 40, right: 40, top: 40 };
-  const width = 1200 - margin.left - margin.right;
+  const width = containerWidth - margin.left - margin.right;
   const height = 1000 - margin.top - margin.bottom;
 
   container.innerHTML = "";
@@ -69,7 +71,7 @@ const drawSVG = () => {
       .attr("cx", X(point.tSNE_1))
       .attr("cy", Y(point.tSNE_2))
       .attr("r", radius)
-      .attr("fill", getCategoryColor(point.cluster))
+      .attr("fill", baseColors[parseInt(point.cluster)])
       .attr("stroke", "black")
       .attr("stroke-width", 0.5)
       .on("click", () => {
