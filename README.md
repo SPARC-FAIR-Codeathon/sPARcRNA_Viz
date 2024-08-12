@@ -1,5 +1,5 @@
 General Notes: 
-- Don't believe there are any specific requirements for the readme, so simply modeled after previous winners
+- Don't believe there are any specific requirements for the readme, so loosely based on previous winners
 - Importantly, the 2 most recent winning README's are partly authored by the same person, explaining the similarity
 - For workflow section, used README from "develop" branch
 
@@ -10,10 +10,14 @@ Readme begins below:
 
 <p align="center">
   <img width="546" alt="Screenshot 2024-08-12 at 10 41 00 AM" src="https://github.com/user-attachments/assets/c88465f0-80e5-436e-b88f-fd04c277cde2">
-  <img width="723" alt="Screenshot 2024-08-12 at 10 38 41 AM" src="https://github.com/user-attachments/assets/66739bc4-2a2a-40a9-8beb-d8d7cb5faba5">
+  <img width="722" alt="Screenshot 2024-08-12 at 11 35 07 AM" src="https://github.com/user-attachments/assets/f82ae7b8-71c2-490f-aedc-cb359e39762b">
+  <br></br>
+  <img width="600" alt="Screenshot 2024-08-12 at 11 17 58 AM" src="https://github.com/user-attachments/assets/70badfca-35db-4fff-b7e0-efedc242f6f5">
+  <br></br>
 </p>
 
 # Table of Contents
+
 - [About](#about)
 - [Research Purpose](#research-purpose)
   - [Introduction](#introduction)
@@ -21,7 +25,7 @@ Readme begins below:
   - [Importance of FAIR Data Principles](#importance-of-fair-data-principles)
   - [Current SPARC Portal Tools](#current-sparc-portal-tools)
   - [Challenge Encountered](#challenge-encountered)
-  - [Our Solution: <Team 7 Project Name>](#our-solutiom-team-7-project-name)
+  - [Our Solution: <Team 7 Project Name>](#our-solution-team-7-project-name)
   - [FAIR-Centered Design](#fair-centered-design)
 - [Using <Team 7 Project Name>](#using-team-7-project-name)
   - [<Team 7 Project Name> Requirements](#team-7-project-name-requirements)
@@ -55,12 +59,13 @@ Easily generate differential expression results from [SPARC](https://sparc.scien
 - GNU Make
 - Python3
 - Docker
+- Astro
 - HTML
 - JavaScript
 - Tailwind CSS
 Can make a visual once this is finalized
 ## Background
-In recent years, single-cell RNA-sequencing (scRNA-seq) has emerged as a preeminent method for the analysis of gene expression in biological tissue, providing researchers access to genetic data previously inaccessible. This is largely due to advancements in wet lab and dry leb techniques, as well computing power, where these improvements enable the collection of large datasets often spanning hundreds of millions of entries. With this newfound wealth of data, a need has arisen for high-efficiency bioinformatics pipelines and tools that allow for the analysis of scRNA-seq data. Thus, one computational method currently in use is differential gene expression (DGE) analysis, which identifies statistically significant genes (i.e., results that are minimally confounded by dropouts/experimental errors) and determines the expression level of a gene relative to the entire dataset. Using these statistically significant results, it is possible to correlate the most highly expressed genes to their tangible, biological effects through the use of gene ontology databases such as the Gene Ontology Knowledgebase (GO) (https://www.geneontology.org/).
+In recent years, single-cell RNA-sequencing (scRNA-seq) has emerged as a preeminent method for the analysis of gene expression in biological tissue, providing researchers access to genetic data previously inaccessible. This is largely due to advancements in wet lab and dry leb techniques, as well computing power, where these improvements enable the collection of large datasets often spanning hundreds of millions of entries. With this newfound wealth of data, a need has arisen for high-efficiency bioinformatics pipelines and tools that allow for the analysis of scRNA-seq data. Thus, one computational method currently in use is differential gene expression (DGE) analysis, which identifies statistically significant genes (i.e., results that are minimally confounded by dropouts/experimental errors) and determines the expression level of a gene relative to the entire dataset. Using these statistically significant results, it is possible to correlate the most highly expressed genes to their tangible, biological effects through the use of gene ontology databases such as the [Gene Ontology Knowledgebase (GO)](https://www.geneontology.org/).
 <br></br>
 The SPARC Portal currently hosts a rich collection of scRNA-seq data across several different tissues and species. Therefore, the SPARC platform could be further enhanced by the inclusion of data visualization and the aforementioned DGE tools. This is achieved in <Team 7 Project Name> through the use of **t-SNE plotting** and **GSEA**.
 ### About t-SNE Plots
@@ -78,12 +83,13 @@ FAIR Data is
 - Details about Transcriptomic_oSPARC, citing accordingly
 ## Challenge Encountered
 - Gene expression visualization integratable (one might even say … interoperable) with SPARC, with a focus on FAIR Principles
-## Our Solutiom: <Team 7 Project Name>
+## Our Solution: <Team 7 Project Name>
 - Detailed discussion of inputs, outputs, pipeline
 - These could all be separate subheadings to maintain organization
 - Can make diagrams to enhance the text
 ## FAIR-Centered Design
 - Specific discussion of how our design is more FAIR than existing
+### Summary of FAIR Principles
 
 | FAIR Principle | Other Tools | <Team 7 Project Name> |
 | --- | --- | --- |
