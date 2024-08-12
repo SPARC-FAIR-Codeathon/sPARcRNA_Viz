@@ -21,6 +21,10 @@
   - [sPARcRNA_Viz Workflow](#sparcrna_viz-workflow)
   - [Tutorial](#tutorial)
 - [Additional Information](#additional-information)
+  - [Issue Reporting](#issue-reporting)
+  - [How to Contribute](#how-to-contribute)
+  - [Cite Us](#cite-us)
+  - [License](#license)
   - [FAIR Practices](#fair-practices)
   - [Team](#team)
   - [Materials Cited](#materials-cited)
@@ -72,7 +76,7 @@ FAIR data is that which is **F**indable, **A**ccessible, **I**nteroperable, and 
 Particularly in the case of scRNA-seq data, which is expensive from both a wet and dry lab standpoint, it is very useful to adhere to FAIR standards. For instance, one particularly common phenomemon with respect to scRNA-seq is **dropout**, where portions of RNA are not captured by experimental techniques. scRNA-seq data can also be signficantly varied with regard to format; often, differently-labeled matrices may contain raw counts data, or data that has been normalized by a method such as CPM, TPM, or RPKM/FPKM. The FAIR article cited on the SPARC website expands upon this idea further: the licensing of data can also pose a challenge for the analysis of gene regulation and expression. Therefore, the intentional **categorization and stewardship** of data can present a major benefit to transcriptomics researchers, propelling scientific progress.
 
 ## Current SPARC Portal Tools
-As of 8/12/24, the Transcriptomic_oSPARC utility would appear to be the most prominent SPARC tool relating to the analysis gene expression. This tool is very effective in displaying industry-standard static graphical outputs, which can prove quite useful to researchers. However, a limitation may perhaps exist in the current customization level; it may be necessary to edit the code itself to change particular parameters. There is also a niche to potentially explore in adding interactivity to the graphs, further enahncing the user experience.
+As of 8/12/24, the Transcriptomic_oSPARC utility would appear to be the most prominent SPARC tool relating to the analysis gene expression. This tool is very effective in displaying industry-standard static graphical outputs, which can prove quite useful to researchers. However, a limitation may perhaps exist in the current customization level; it may be necessary to edit the code itself to change particular parameters. There was also a niche to explore in adding interactivity to the graphs, further enahncing the user experience.
 ## Challenge Encountered
 Therfore, our team sought to create a RNA-seq visualization utility that supports the specification of **specific parameters**, as well as **interactivity**. There was also room for experimentation in predicting gene ontology with **GSEA**.
 ## Our Solution: sPARcRNA_Viz
@@ -155,6 +159,8 @@ sPARcRNA_Viz offers a variety of `make` options:
 - Maybe some kind of tutorial if applicable and we have extra time
 - This could possibly consist of sample inputs
 # Additional Information
+## Issue Reporting
+Please utilize the **Issues** tab of this repository should you encounter any problems with sPARcRNA_Viz.
 ## How to Contribute
 Info here
 ## Cite Us
