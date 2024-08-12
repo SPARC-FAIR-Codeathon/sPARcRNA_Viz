@@ -23,11 +23,7 @@ const BASE_COLORS = [
 const MARGIN = { bottom: 40, left: 40, right: 40, top: 40 };
 const HEIGHT = 1000 - MARGIN.top - MARGIN.bottom;
 
-// Use the global variables
-// function fetchData() {
-//   return Promise.resolve(tsne_data_json);
-// }
-
+// Fetch all required data
 function fetchData() {
   return Promise.all([
     Promise.resolve(tsne_data_json),
@@ -56,7 +52,6 @@ function createScales(data, width, height) {
     .scaleLinear()
     .domain(xExtent)
     .range([20, width - 20]);
-
   const Y = d3
     .scaleLinear()
     .domain(yExtent)
@@ -65,99 +60,71 @@ function createScales(data, width, height) {
   return { X, Y };
 }
 
-// function generateSidePanel(point) {
-//   const sidePanel = document.getElementById("side-panel");
-
-//   // Get the cluster info for the point
-//   const clusterInfo = cluster_info_json[point.cluster][0];
-//   let cellInfo = null;
-
-//   for (const cluster in integrated_tsne_gsea_json) {
-//     const cell = integrated_tsne_gsea_json[cluster].find(
-//       (cell) => cell.cell_id === point.cell_id
-//     );
-//     if (cell) {
-//       cellInfo = cell;
-//       break;
-//     }
-//   }
-
-//   console.log(cellInfo);
-
-//   // Create the HTML content for the side panel
-//   const content = `
-//     <h2>Cluster Info</h2>
-//     <p><strong>Top Pathways:</strong></p>
-//     <ul class='list-disc list-inside'>
-//       ${clusterInfo.top_pathways
-//         .map((pathway) => `<li class='ml-2'>${pathway}</li>`)
-//         .join("")}
-//     </ul>
-//     <hr />
-//     <h2>Point Info</h2>
-//     <p><strong>Top Pathways:</strong></p>
-//     <ul class='list-disc list-inside'>
-//     ${cellInfo.top_pathways
-//       .map((pathway) => `<li class='ml-2'>${pathway}</li>`)
-//       .join("")}
-//     </ul>
-
-//   `;
-
-//   // Set the content of the side panel
-//   sidePanel.innerHTML = content;
-// }
-
+// Generate GSEA info panel content
 function generateGseaInfo(pathway) {
   const gseaPanel = document.getElementById("gsea-info-panel");
-
   const gseaInfo = gsea_results_json.find(
     (result) => result.pathway === pathway
   );
 
   const content = `
-    <h2>GSEA Info</h2>
-    <p><strong>Pathway:</strong> ${gseaInfo.pathway}</p>
-    <p><strong>P Value:</strong> ${gseaInfo.pval}</p>
-    <p><strong>Leading Edge:</strong></p>
-    <ul class='list-disc list-inside'>
-      ${gseaInfo.leadingEdge
-        .map((gene) => `<li class='ml-2'>${gene}</li>`)
-        .join("")}
-    </ul>
+    <div class="bg-white shadow-xl rounded-lg p-6">
+      <h2 class="text-lg font-semibold mb-2">GSEA Info</h2>
+      <p class="mb-2"><strong class="font-semibold">Pathway:</strong> ${
+        gseaInfo.pathway
+      }</p>
+      <p class="mb-2"><strong class="font-semibold">P Value:</strong> ${gseaInfo.pval.toExponential(
+        2
+      )}</p>
+      <p class="mb-2"><strong class="font-semibold">Leading Edge:</strong></p>
+      <ul class="list-disc list-inside pl-4">
+        ${gseaInfo.leadingEdge
+          .map((gene) => `<li class="mb-1">${gene}</li>`)
+          .join("")}
+      </ul>
+    </div>
   `;
 
   gseaPanel.innerHTML = content;
 }
 
+// Generate cluster info panel content
 function generateClusterInfo(point) {
-  // Clear the gsae info panel
   const gseaPanelInfo = document.getElementById("gsea-info-panel");
   gseaPanelInfo.innerHTML = "";
 
   const clusterPanelInfo = document.getElementById("cluster-info-panel");
-
-  // Get the cluster info for the point
   const clusterInfo = cluster_info_json[point.cluster][0];
 
-  // Create the HTML content for the side panel
   const content = `
-    <h2>Cluster Info</h2>
-    <p><strong>Top Pathways:</strong></p>
-    <ul class='list-disc list-inside'>
-      ${clusterInfo.top_pathways
-        .map(
-          (pathway) => `<li class='ml-2'>${pathway} 
-        <button class="bg-slate-100 border p-1" onClick="generateGseaInfo('${pathway}')">
-          View Details
-        </button>
-        </li>`
-        )
-        .join("")}
-    </ul>
+    <div class="bg-white shadow-md rounded-lg p-6">
+      <h2 class="text-lg font-semibold mb-2 flex gap-2 items-center">
+      <span>Cluster Info</span> 
+       <div class="h-2 w-2 border" style="background-color: ${
+         BASE_COLORS[point.cluster]
+       }"></div>
+      </h2>
+      <p class="mb-2"><strong class="font-semibold">Top Pathways:</strong></p>
+      <ul class="list-none pl-0">
+        ${clusterInfo.top_pathways
+          .map(
+            (pathway) => `
+          <li class="mb-2">
+            <div class="flex items-center justify-between">
+              <span class="mr-4 w-64 truncate" title="${pathway}">${pathway}</span>
+              <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded whitespace-nowrap" 
+                      onClick="generateGseaInfo('${pathway}')">
+                View Details
+              </button>
+            </div>
+          </li>
+        `
+          )
+          .join("")}
+      </ul>
+    </div>
   `;
 
-  // Set the content of the side panel
   clusterPanelInfo.innerHTML = content;
 }
 
@@ -177,36 +144,28 @@ function drawDataPoints(svg, data, X, Y) {
       .attr("stroke", "black")
       .attr("stroke-width", 0.5);
 
-    circle.on("click", () => console.log(point));
     circle.on("mouseover", () => {
       // Gray out all points
       d3.selectAll(".data-point").transition().attr("fill", "ghostwhite");
-
       // Highlight the selected cluster
       d3.selectAll(`.cluster-${point.cluster}`)
         .transition()
-        .attr("fill", BASE_COLORS[parseInt(point.cluster)]);
-
-      // Highlight the cluster points
-      d3.selectAll(`.cluster-${point.cluster}`)
-        .transition()
+        .attr("fill", BASE_COLORS[parseInt(point.cluster)])
         .attr("r", radius + 2);
     });
 
     circle.on("click", () => {
-      console.log(point);
-
-      // Fill the side panel with the data
       generateClusterInfo(point);
     });
 
     circle.on("mouseout", () => {
-      // Reset the color of all points
+      // Reset the color and size of all points
       for (let i = 0; i < BASE_COLORS.length; i++) {
-        d3.selectAll(`.cluster-${i}`).transition().attr("fill", BASE_COLORS[i]);
+        d3.selectAll(`.cluster-${i}`)
+          .transition()
+          .attr("fill", BASE_COLORS[i])
+          .attr("r", radius);
       }
-
-      d3.selectAll(`.cluster-${point.cluster}`).transition().attr("r", radius);
     });
   });
 }
@@ -215,17 +174,17 @@ function drawDataPoints(svg, data, X, Y) {
 function drawCentroids(svg, clusterInfo, X, Y) {
   Object.keys(clusterInfo).forEach((cluster) => {
     const info = clusterInfo[cluster][0];
+    const color = BASE_COLORS[parseInt(cluster)];
 
-    // Create an x for the center point
+    // Create an X for the center point
     svg
       .append("line")
       .attr("x1", X(info.centroid_x) - 5)
       .attr("y1", Y(info.centroid_y) - 5)
       .attr("x2", X(info.centroid_x) + 5)
       .attr("y2", Y(info.centroid_y) + 5)
-      .attr("stroke", "black")
-      .attr("stroke-width", 2)
-      .attr("stroke", BASE_COLORS[parseInt(cluster)]);
+      .attr("stroke", color)
+      .attr("stroke-width", 2);
 
     svg
       .append("line")
@@ -233,11 +192,8 @@ function drawCentroids(svg, clusterInfo, X, Y) {
       .attr("y1", Y(info.centroid_y) - 5)
       .attr("x2", X(info.centroid_x) - 5)
       .attr("y2", Y(info.centroid_y) + 5)
-      .attr("stroke", "black")
-      .attr("stroke-width", 2)
-      .attr("stroke", BASE_COLORS[parseInt(cluster)]);
-
-    // centroid.on("click", () => console.log(info));
+      .attr("stroke", color)
+      .attr("stroke-width", 2);
   });
 }
 
@@ -261,17 +217,17 @@ function drawSVG(data, clusterInfo) {
 // Main execution function
 async function main() {
   try {
-    const data = await fetchData();
-    if (!data || data.length === 0) {
+    const [tsneData, clusterInfo, gseaResults] = await fetchData();
+    if (!tsneData || tsneData.length === 0) {
       throw new Error("No data received or empty data set");
     }
-    drawSVG(data[0], data[1]);
+    drawSVG(tsneData, clusterInfo);
     console.log("Visualization completed successfully");
   } catch (error) {
     console.error("An error occurred in main execution:", error);
-    document.getElementById(
-      "chart"
-    ).innerHTML = `<p>Error: ${error.message}</p>`;
+    document.getElementById("chart").innerHTML = `
+      <p class="text-red-500 font-bold">Error: ${error.message}</p>
+    `;
   }
 }
 
