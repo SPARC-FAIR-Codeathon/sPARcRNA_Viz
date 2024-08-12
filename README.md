@@ -14,12 +14,12 @@
   - [Importance of FAIR Data Principles](#importance-of-fair-data-principles)
   - [Current SPARC Portal Tools](#current-sparc-portal-tools)
   - [Challenge Encountered](#challenge-encountered)
-  - [Our Solution: sPARcRNA_Viz](#our-solution-sparcrna_viz)
+  - [Our Solution: sPARcRNAViz](#our-solution-sparcrnaViz)
   - [FAIR-Centered Design](#fair-centered-design)
   - [Future Vision](#future-vision)
-- [Using sPARcRNA_Viz](#using-sparcrna_viz)
-  - [sPARcRNA_Viz Requirements](#sparcrna_viz-requirements)
-  - [sPARcRNA_Viz Workflow](#sparcrna_viz-workflow)
+- [Using sPARcRNAViz](#using-sparcrnaViz)
+  - [sPARcRNAViz Requirements](#sparcrnaViz-requirements)
+  - [sPARcRNAViz Workflow](#sparcrnaViz-workflow)
   - [Tutorial](#tutorial)
 - [Additional Information](#additional-information)
   - [Issue Reporting](#issue-reporting)
@@ -34,9 +34,9 @@
 Easily generate differential expression results from [SPARC](https://sparc.science) scRNA-seq data in a FAIR manner.
 # Research Purpose
 ## Introduction
-sPARcRNA_Viz is an **all-in-one gene expression visualization utility** integratable with [o²S²PARC](https://osparc.io/). Using sPARcRNA_Viz, researchers can create an interactive t-SNE from single-cell RNA-sequencing data, as well as perform in silico GSEA analysis to determine the most highly expressed genes. From these statistically significant genes, researchers can determine potential gene ontologies arising from their sample(s). In addition, the seamless integration of sPARcRNA_Viz with the o²S²PARC computing platform enables data accessibility concordant with **FAIR Data Principles**.
-### Notable Features of sPARcRNA_Viz
-sPARcRNA_Viz provides the user with the ability to fine-tune multiple **gene expression parameters**:
+sPARcRNAViz is an **all-in-one gene expression visualization utility** integratable with [o²S²PARC](https://osparc.io/). Using sPARcRNAViz, researchers can create an interactive t-SNE from single-cell RNA-sequencing data, as well as perform in silico GSEA analysis to determine the most highly expressed genes. From these statistically significant genes, researchers can determine potential gene ontologies arising from their sample(s). In addition, the seamless integration of sPARcRNAViz with the o²S²PARC computing platform enables data accessibility concordant with **FAIR Data Principles**.
+### Notable Features of sPARcRNAViz
+sPARcRNAViz provides the user with the ability to fine-tune multiple **gene expression parameters**:
 - Minimum number of cells expressing a gene
 - Minimum number of features (genes) per cell
 - Maximum number of features (genes) per cell
@@ -47,7 +47,6 @@ sPARcRNA_Viz provides the user with the ability to fine-tune multiple **gene exp
 - Minimum gene set size for GSEA
 - MSigDB category for GSEA
 ### Technology Stack
-(Quickly jotted down some stuff -- please please add if anything is missing here!!)
 - o²S²PARC
 - R
 - GNU Make
@@ -62,7 +61,7 @@ Can make a visual once this is finalized
 ## Background
 In recent years, **single-cell RNA-sequencing** (scRNA-seq) has emerged as a preeminent method for the analysis of gene expression in biological tissue, providing researchers access to genetic data previously inaccessible. This is largely due to advancements in wet lab and dry leb techniques, as well computing power, where these improvements enable the collection of large datasets often spanning hundreds of millions of entries. With this newfound wealth of data, a need has arisen for high-efficiency bioinformatics pipelines and tools that allow for the analysis of scRNA-seq data. Thus, one computational method currently in use is **differential gene expression (DGE) analysis**, which identifies statistically significant genes (i.e., results that are minimally confounded by experimental errors) and determines the expression level of a gene relative to the entire dataset. Using these statistically significant results, it is possible to correlate the most highly expressed genes to their tangible, biological effects through the use of **gene ontology** databases such as the [Gene Ontology Knowledgebase (GO)](https://www.geneontology.org/).
 <br></br>
-The SPARC Portal currently hosts a rich collection of scRNA-seq data across several different tissues and species. Therefore, the SPARC platform could be further enhanced by the inclusion of data visualization and the aforementioned DGE tools. This is achieved in sPARcRNA_Viz through the use of **t-SNE plotting** and **GSEA**.
+The SPARC Portal currently hosts a rich collection of scRNA-seq data across several different tissues and species. Therefore, the SPARC platform could be further enhanced by the inclusion of data visualization and the aforementioned DGE tools. This is achieved in sPARcRNAViz through the use of **t-SNE plotting** and **GSEA**.
 ### About t-SNE Plots
 t-distributed Stochastic Neighbor Embedding (t-SNE) is a plotting and visualization technique that focuses on pairwise similarities among datasets. Like PCA, it is a dimensionality reduction technique. For its utility in comparing large, complex datasets, t-SNE is commonly employed by RNA-seq researchers.
 ### About GSEA
@@ -80,36 +79,36 @@ Particularly in the case of scRNA-seq data, which is expensive from both a wet a
 As of 8/12/24, the Transcriptomic_oSPARC utility would appear to be the most prominent SPARC tool relating to the analysis gene expression. This tool is very effective in displaying industry-standard static graphical outputs, which can prove quite useful to researchers. However, a limitation may perhaps exist in the current customization level; it may be necessary to edit the code itself to change particular parameters. There was also a niche to explore in adding interactivity to the graphs, further enahncing the user experience.
 ## Challenge Encountered
 Therfore, our team sought to create a RNA-seq visualization utility that supports the specification of **specific parameters**, as well as **interactivity**. There was also room for experimentation in predicting gene ontology with **GSEA**.
-## Our Solution: sPARcRNA_Viz
-To address this challenge, we present **sPARcRNA_Viz**, an scRNA-seq visualization tool for potential entry alongside Transcriptomic_oSPARC. In incorporating flexible parameters, interactivity, and an additional DEA metric, sPARcRNA_Viz will complement Transcriptomic_oSPARC as part of a growing SPARC gene expression toolkit.
-### sPARcRNA_Viz Pipeline
+## Our Solution: sPARcRNAViz
+To address this challenge, we present **sPARcRNAViz**, an scRNA-seq visualization tool for potential entry alongside Transcriptomic_oSPARC. In incorporating flexible parameters, interactivity, and an additional DEA metric, sPARcRNAViz will complement Transcriptomic_oSPARC as part of a growing SPARC gene expression toolkit.
+### sPARcRNAViz Pipeline
 Would love input here if possible
 Can make a diagram once the pipeline is establshed
 ## FAIR-Centered Design
-Perhaps the **most important** aspect of sPARcRNA_Viz is its emphasis on the FAIR Data Principles. Summarized below are highlight features of sPARcRNA_Viz supporting the FAIR initiative.
+Perhaps the **most important** aspect of sPARcRNAViz is its emphasis on the FAIR Data Principles. Summarized below are highlight features of sPARcRNAViz supporting the FAIR initiative.
 
 ### Summary of FAIR Principles Application
-| FAIR Principle | Other Tools | sPARcRNA_Viz |
+| FAIR Principle | Other Tools | sPARcRNAViz |
 | --- | --- | --- |
-| **F**indable | May not be connected to an existing database such as the SPARC Portal, which could hinder the findability of data | sPARcRNA_Viz is connected to o²S²PARC, so it can use the well-organized datasets provided on the SPARC portal |
-| **A**ccessible | May have a user interface that requires a programming background | sPARcRNA_Viz's friendly user interface and visuals allow researchers to quickly engage with data |
-| **I**nteroperable | May not allow for connections between datasets | Through its use of GSEA, sPARcRNA_Viz allows for the meaningful connection of datasets: scRNA-seq data can be used in association with gene ontology. In addition |
-| **R**eusable | May only support the formatting of one dataset | sPARcRNA_Viz be used with multiple datasets due to the ability to specify parameters. Likewise, sPARcRNA_Viz offers a security benefit through its use of input validation |
+| **F**indable | May not be connected to an existing database such as the SPARC Portal, which could hinder the findability of data | sPARcRNAViz is connected to o²S²PARC, so it can use the well-organized datasets provided on the SPARC portal |
+| **A**ccessible | May have a user interface that requires a programming background | sPARcRNAViz's friendly user interface and visuals allow researchers to quickly engage with data |
+| **I**nteroperable | May not allow for connections between datasets | Through its use of GSEA, sPARcRNAViz allows for the meaningful connection of datasets: scRNA-seq data can be used in association with gene ontology. In addition |
+| **R**eusable | May only support the formatting of one dataset | sPARcRNAViz be used with multiple datasets due to the ability to specify parameters. Likewise, sPARcRNAViz offers a security benefit through its use of input validation |
 
-Additional information surrounding these applications is detailed in the sPARcRNA_Viz FAIR Practices document found [here](#fair-practices).
+Additional information surrounding these applications is detailed in the sPARcRNAViz FAIR Practices document found [here](#fair-practices).
 ## Future Vision
-Maybe we could add what could be the future of sPARcRNA_Viz here (maybe add different graphs, api calls, etc)
+Maybe we could add what could be the future of sPARcRNAViz here (maybe add different graphs, api calls, etc)
 Would welcome any input here
-# Using sPARcRNA_Viz
-## sPARcRNA_Viz Requirements
+# Using sPARcRNAViz
+## sPARcRNAViz Requirements
 - GNU Make
 - Python3
 - [``Docker``](https://docs.docker.com/get-docker/) (if you wish to build and test the service locally)
 ### Required Input Format
-sPARcRNA_Viz currently supports JSON and .csv single-cell matrices.
+sPARcRNAViz currently supports JSON and .csv single-cell matrices.
 <br></br>
 Is this correct? Do we have a specific input format in terms of the matrix
-## sPARcRNA_Viz Workflow
+## sPARcRNAViz Workflow
 ### Create the Service
 1. The [Dockerfile](osparc_dex_service/docker/Dockerfile) shall be modified to install the command-line tool you'd like to execute and additional dependencies
 All the rest is optional:
@@ -139,8 +138,8 @@ $ make help
 $ make build # This will build an o²S²PARC-compatible image (similar to `Docker build` command)
 $ make run-local # This will start a new Docker container on your computer and run the command.
 ```
-## Configuring sPARcRNA_Viz
-sPARcRNA_Viz offers a variety of `make` options:
+## Configuring sPARcRNAViz
+sPARcRNAViz offers a variety of `make` options:
 | Option | Description | Default |
 | --- | --- | --- |
 | `-i`, `--input` | Input directory path | `'validation/input/data/'` |
@@ -161,7 +160,7 @@ sPARcRNA_Viz offers a variety of `make` options:
 - This could possibly consist of sample inputs
 # Additional Information
 ## Issue Reporting
-Please utilize the **Issues** tab of this repository should you encounter any problems with sPARcRNA_Viz.
+Please utilize the **Issues** tab of this repository should you encounter any problems with sPARcRNAViz.
 ## How to Contribute
 Info here
 ## Cite Us
@@ -169,7 +168,7 @@ Info here
 ## License
 - All of the winning projects included a license
 ## FAIR Practices
-sPARcRNA_Viz is designed around the use of FAIR Practices. Further explanation as to FAIR Principle adherence is included in this [document](https://docs.google.com/document/d/1Me_6LzF9eMdD2Bhh9df7ncxRGepV7pU6kBUjl15Dyhw/edit?usp=sharing).
+sPARcRNAViz is designed around the use of FAIR Practices. Further explanation as to FAIR Principle adherence is included in this [document](https://docs.google.com/document/d/1Me_6LzF9eMdD2Bhh9df7ncxRGepV7pU6kBUjl15Dyhw/edit?usp=sharing).
 ## Team
 - It seems all the Grand Prize-winning teams listed the recommended team roles here (Lead, Writer, Sysadmin, etc.)
 ## Materials Cited
