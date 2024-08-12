@@ -73,31 +73,8 @@ As of 8/12/24, the [Transcriptomic_oSPARC](https://github.com/SPARC-FAIR-Codeath
 The gene expression data in SPARC is somewhat limited and is in a raw data format, making it not as interoperable. Our goal was to make it more interoperable and easy to use. Therefore, our team sought to create a RNA-seq visualization utility that supports the specification of **specific parameters**, as well as **interactivity**. There was also room for experimentation in predicting gene ontology with **GSEA**.
 ## Our Solution: sPARcRNA_Viz
 To address this challenge, we present **sPARcRNA_Viz**, an scRNA-seq visualization tool for potential entry alongside Transcriptomic_oSPARC. In incorporating flexible parameters, interactivity, and an additional DEA metric, sPARcRNA_Viz will complement Transcriptomic_oSPARC as part of a growing SPARC gene expression toolkit.
-### sPARcRNA_Viz Pipeline
 
-
-## FAIR-Centered Design
-Perhaps the **most important** aspect of sPARcRNA_Viz is its emphasis on the FAIR Data Principles. Summarized below are highlight features of sPARcRNA_Viz supporting the FAIR initiative. 
-## Importance of FAIR Data Principles
-<p align="left">
-  <img width="576" alt="Screenshot 2024-08-12 at 9 58 14 AM" src=https://github.com/user-attachments/assets/fc0112ba-ac4e-41fe-92ac-65e5339a6eb7>
-</p>
-
-FAIR data is that which is **F**indable, **A**ccessible, **I**nteroperable, and **R**eusable. These tenets are highly important within the scientific context as a lack of clarity surrounding data may introduce confounding variables. Thus, the FAIR system was derived so as to create a method to organize data, thus serving both present and future researchers.
-<br></br>
-Particularly in the case of scRNA-seq data, which is expensive from both a wet and dry lab standpoint, it is very useful to adhere to FAIR standards. For instance, one particularly common phenomemon with respect to scRNA-seq is **dropout**, where portions of RNA are not captured by experimental techniques. scRNA-seq data can also be signficantly varied with regard to format; often, differently-labeled matrices may contain raw counts data, or data that has been normalized by a method such as CPM, TPM, or RPKM/FPKM. The FAIR article cited on the SPARC website expands upon this idea further: the licensing of data can also pose a challenge for the analysis of gene regulation and expression. Therefore, the intentional **categorization and stewardship** of data can present a major benefit to transcriptomics researchers, propelling scientific progress.
-
-### Summary of FAIR Principles Application
-| FAIR Principle | Other Tools | sPARcRNA_Viz |
-| --- | --- | --- |
-| **F**indable | May not be connected to an existing database such as the SPARC Portal, which could hinder the findability of data | sPARcRNA_Viz is connected to o²S²PARC, so it can use the well-organized datasets provided on the SPARC portal |
-| **A**ccessible | May have a user interface that requires a programming background | sPARcRNA_Viz's friendly user interface and visuals allow researchers to quickly engage with data |
-| **I**nteroperable | May not allow for connections between datasets | Through its use of GSEA, sPARcRNA_Viz allows for the meaningful connection of datasets: scRNA-seq data can be used in association with gene ontology. In addition |
-| **R**eusable | May only support the formatting of one dataset | sPARcRNA_Viz be used with multiple datasets due to the ability to specify parameters. Likewise, sPARcRNA_Viz offers a security benefit through its use of input validation |
-
-Additional information surrounding these applications is detailed in the sPARcRNA_Viz FAIR Practices document found [here](#fair-practices).
 # Using sPARcRNA_Viz
-
 ## sPARcRNA_Viz Requirements
 - GNU Make
 - Python3
@@ -131,6 +108,28 @@ sPARcRNA_Viz offers a variety of `make` options:
 
 ## Future Vision
 sPARcRNA_Viz would be expanded to include other interactive visualizations and API calls to other gene databases. This would provide more ways to analyze genes and integrate with other websites.
+
+## FAIR-Centered Design
+Perhaps the **most important** aspect of sPARcRNA_Viz is its emphasis on the FAIR Data Principles. Summarized below are highlight features of sPARcRNA_Viz supporting the FAIR initiative. 
+## Importance of FAIR Data Principles
+<p align="left">
+  <img width="576" alt="Screenshot 2024-08-12 at 9 58 14 AM" src=https://github.com/user-attachments/assets/fc0112ba-ac4e-41fe-92ac-65e5339a6eb7>
+</p>
+
+FAIR data is that which is **F**indable, **A**ccessible, **I**nteroperable, and **R**eusable. These tenets are highly important within the scientific context as a lack of clarity surrounding data may introduce confounding variables. Thus, the FAIR system was derived so as to create a method to organize data, thus serving both present and future researchers.
+<br></br>
+Particularly in the case of scRNA-seq data, which is expensive from both a wet and dry lab standpoint, it is very useful to adhere to FAIR standards. For instance, one particularly common phenomemon with respect to scRNA-seq is **dropout**, where portions of RNA are not captured by experimental techniques. scRNA-seq data can also be signficantly varied with regard to format; often, differently-labeled matrices may contain raw counts data, or data that has been normalized by a method such as CPM, TPM, or RPKM/FPKM. The FAIR article cited on the SPARC website expands upon this idea further: the licensing of data can also pose a challenge for the analysis of gene regulation and expression. Therefore, the intentional **categorization and stewardship** of data can present a major benefit to transcriptomics researchers, propelling scientific progress.
+
+### Summary of FAIR Principles Application
+| FAIR Principle | Other Tools | sPARcRNA_Viz |
+| --- | --- | --- |
+| **F**indable | May not be connected to an existing database such as the SPARC Portal, which could hinder the findability of data | sPARcRNA_Viz is connected to o²S²PARC, so it can use the well-organized datasets provided on the SPARC portal |
+| **A**ccessible | May have a user interface that requires a programming background | sPARcRNA_Viz's friendly user interface and visuals allow researchers to quickly engage with data |
+| **I**nteroperable | May not allow for connections between datasets | Through its use of GSEA, sPARcRNA_Viz allows for the meaningful connection of datasets: scRNA-seq data can be used in association with gene ontology. In addition |
+| **R**eusable | May only support the formatting of one dataset | sPARcRNA_Viz be used with multiple datasets due to the ability to specify parameters. Likewise, sPARcRNA_Viz offers a security benefit through its use of input validation |
+
+Additional information surrounding these applications is detailed in the sPARcRNA_Viz FAIR Practices document found [here](#fair-practices).
+
 # Additional Information
 ## Issue Reporting
 Please utilize the **Issues** tab of this repository should you encounter any problems with sPARcRNA_Viz.
