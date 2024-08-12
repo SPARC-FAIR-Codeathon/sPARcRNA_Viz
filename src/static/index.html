@@ -8,18 +8,34 @@
     <meta name="generator"  />
     <title>Visualizations</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" integrity="sha512-vc58qvvBdrDR4etbxMdlTt4GBQk1qjvyORR2nrsPsFPyrs+/u5c3+1Ct6upOgdZoIl7eq6k3a1UPDSNAQi/32A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://d3js.org/d3-polygon.v2.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+
     <script src="tsne.js"></script>
-    <script src="tsne_data.js"></script>
+
+    <script src="./raw_data_js/cluster_avg_expression.js"></script>
+    <script src="./raw_data_js/cluster_info.js"></script>
+    <script src="./raw_data_js/gsea_cluster_results.js"></script>
+    <script src="./raw_data_js/gsea_results.js"></script>
+    <script src="./raw_data_js/integrated_tsne_gsea.js"></script>
+    <script src="./raw_data_js/top10_markers.js"></script>
+    <script src="./raw_data_js/tsne_data.js"></script>
   </head>
   <body class="p-4">
     <main class="bg-white w-full h-full">
         <h1 cl>T-SNE</h1>
     
         <hr />
-    
-        <div id="chart" class="py-3 w-full"></div>
-    
+
+        <div class="flex justify-between items-start">
+
+          
+          <div id="chart" class="py-3 w-full"></div>
+          <div class="flex flex-col gap-2 w-1/4">
+            <div id="cluster-info-panel"></div>
+            <div id="gsea-info-panel"></div>
+          </div>
+        </div>
         <hr />
     
         <pre id="pre-data"></pre>
