@@ -1,19 +1,25 @@
 # Docker base image, change if needed
 FROM ubuntu:24.04 AS base
 
+ENV NODE_VERSION "22.x"
+ENV ARCH "amd64"
 # ------------------------------------------------------------------------------------
 # Install system packages and R
 RUN apt-get update \
- && apt-get -y install --no-install-recommends \
-    curl jq zip adduser \
+  && apt-get -y install --no-install-recommends \
+    curl jq zip adduser apt-transport-https ca-certificates gnupg \
     libcurl4-openssl-dev libssl-dev libxml2-dev libhdf5-dev python3 python3-pip \
-    libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev \  # required for R packages
+    libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev \
   && echo "deb https://cloud.r-project.org/bin/linux/ubuntu noble-cran40/" >> /etc/apt/sources.list \
-  && curl -sL "https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc" | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc \
+  && echo "deb [arch=$ARCH signed-by=/usr/share/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_VERSION nodistro main" | tee /etc/apt/sources.list.d/nodesource.list > /dev/null \
+  && echo "Package: nodejs" | tee /etc/apt/preferences.d/nodejs > /dev/null \
+  && echo "Pin: origin deb.nodesource.com" | tee -a /etc/apt/preferences.d/nodejs > /dev/null \
+  && echo "Pin-Priority: 600" | tee -a /etc/apt/preferences.d/nodejs > /dev/null \
+  && curl -fsSL "https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key" | gpg --dearmor -o /usr/share/keyrings/nodesource.gpg \
+  && curl -fsSL "https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc" | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc \
   && apt-get update \
-    && apt-get -y install --no-install-recommends \
-        r-base \
-        r-base-dev \
+  && apt-get -y install --no-install-recommends \
+    r-base r-base-dev \
   && rm -rf /var/lib/apt/lists/*
 # ------------------------------------------------------------------------------------
 
@@ -51,8 +57,8 @@ RUN chmod +x /home/${SC_USER_NAME}/dex.R
 # --------------------------------- Final setup  --------------------------------------
 # Do not modify
 
-ENV INPUT_FOLDER="/input" \
-    OUTPUT_FOLDER="/output"
+ENV INPUT_FOLDER "/input"
+ENV OUTPUT_FOLDER "/output"
 
 WORKDIR /home/${SC_USER_NAME}
 
