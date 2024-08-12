@@ -1,6 +1,7 @@
 General Notes: 
 - Not yet sure if there is a standard rubric/requirements for the readme, currently working to find that out
 - Importantly, the 2 most recent winning README's are partly authored by the same person, explaining the similarity
+- IMPORTANT: The "problem" and "solution" sections may currently be too similar to previous README's, maybe different language or structure could be used here
 
 A logo and possible slogan could potentially be included, as is the case with the KnowMore project
 ## Table of Contents
