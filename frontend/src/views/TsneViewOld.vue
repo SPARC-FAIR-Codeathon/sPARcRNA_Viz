@@ -135,14 +135,17 @@ const getClosestSelectedPoints = (event: any) => {
   const x = event.clientX - rect.left
   const y = event.clientY - rect.top
 
+  //
   const X = d3
     .scaleLinear()
     .domain([20, canvas.width - 20])
+    // @ts-expect-error
     .range(d3.extent(solution.value, (d) => parseFloat(d[dimX])))
 
   const Y = d3
     .scaleLinear()
     .domain([20, (canvas.width * 2) / 3 - 20])
+    // @ts-expect-error
     .range(d3.extent(solution.value, (d) => parseFloat(d[dimY])))
 
   const closest = solution.value.reduce(

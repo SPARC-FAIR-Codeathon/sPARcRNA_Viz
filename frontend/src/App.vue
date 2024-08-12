@@ -3,7 +3,7 @@ import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <n-config-provider :theme="theme" :theme-overrides="themeOverrides">
+  <n-config-provider>
     <n-dialog-provider>
       <n-message-provider>
         <n-space vertical size="large">
