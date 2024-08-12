@@ -70,7 +70,7 @@
     "dateCreated": "2024-08-10",
     "dateModified": "2024-08-12",
     "datePublished": "2024-08-12",
-    "description": "An all-in-one gene expression visualization utility integratable with o²S²PARC. Using sPARcRNAViz, researchers can create an interactive t-SNE from single-cell RNA-sequencing data, as well as perform in silico GSEA analysis to determine the most highly expressed genes. From these statistically significant genes, researchers can determine potential gene ontologies arising from their sample(s).",
+    "description": "An all-in-one gene expression visualization utility integratable with o²S²PARC. Using sPARcRNA__Viz, researchers can create an interactive t-SNE from single-cell RNA-sequencing data, as well as perform in silico GSEA analysis to determine the most highly expressed genes. From these statistically significant genes, researchers can determine potential gene ontologies arising from their sample(s).",
     "identifier": "10.5281/zenodo.13308297",
     "keywords": [
         "single-cell RNA",
@@ -78,7 +78,7 @@
         "tSNE"
     ],
     "license": "https://spdx.org/licenses/MIT",
-    "name": "sPARcRNAViz",
+    "name": "sPARcRNA_Viz",
     "operatingSystem": [
         "Windows",
         "macOS"
