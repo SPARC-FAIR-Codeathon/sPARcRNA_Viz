@@ -4,25 +4,34 @@ General Notes:
 - For workflow section, used README from "develop" branch
 
 A logo and possible slogan could potentially be included, as is the case with the KnowMore project
+<br></br>
+Readme begins below:
+
+
+<p align="center">
+  <img width="546" alt="Screenshot 2024-08-12 at 10 41 00 AM" src="https://github.com/user-attachments/assets/c88465f0-80e5-436e-b88f-fd04c277cde2">
+  <img width="723" alt="Screenshot 2024-08-12 at 10 38 41 AM" src="https://github.com/user-attachments/assets/66739bc4-2a2a-40a9-8beb-d8d7cb5faba5">
+</p>
+
 # Table of Contents
-- About
-- Research Purpose
-  - Introduction
-  - Background
-  - Importance of FAIR Principles
-  - Current SPARC Portal Tools
-  - Challenges Encountered
-  - Our Solution: <Team 7 Project Name>
-  - FAIR-Centered Design
-- Using <Team 7 Project Name>
-  - <Team 7 Project Name> Requirements
-  - <Team 7 Project Name> Workflow
-  - Tutorial
-- Additional Information
-  - FAIR Practices
-  - Team
-  - Materials Cited
-  - Acknowledgements
+- [About](#about)
+- [Research Purpose](#research-purpose)
+  - [Introduction](#introduction)
+  - [Background](#background)
+  - [Importance of FAIR Data Principles](#importance-of-fair-data-principles)
+  - [Current SPARC Portal Tools](#current-sparc-portal-tools)
+  - [Challenge Encountered](#challenge-encountered)
+  - [Our Solution: <Team 7 Project Name>](#our-solutiom-team-7-project-name)
+  - [FAIR-Centered Design](#fair-centered-design)
+- [Using <Team 7 Project Name>](#using-team-7-project-name)
+  - [<Team 7 Project Name> Requirements](#team-7-project-name-requirements)
+  - [<Team 7 Project Name> Workflow](#team-7-project-name-workflow)
+  - [Tutorial](#tutorial)
+- [Additional Information](#additional-information)
+  - [FAIR Practices](#fair-practices)
+  - [Team](#team)
+  - [Materials Cited](#materials-cited)
+  - [Acknowledgements](#acknowledgements)
 # About
 Easily generate differential expression results from [SPARC](https://sparc.science) scRNA-seq data in a FAIR manner.
 # Research Purpose
@@ -59,24 +68,29 @@ t-distributed Stochastic Neighbor Embedding (t-SNE) is a plotting and visualizat
 ### About GSEA
 Gene Set Enrichment Analysis (GSEA) is a popular technique for determining statistically significant genes, as well as those that are upregulated and downregulated. This is achieved through a ranking system whereby genes are organized by statistically significance.
 ## Importance of FAIR Data Principles
+<p align="left">
+  <img width="576" alt="Screenshot 2024-08-12 at 9 58 14 AM" src=https://github.com/user-attachments/assets/fc0112ba-ac4e-41fe-92ac-65e5339a6eb7>
+</p>
+
 (May insert graphic here to add visual interest to this section)
 FAIR Data is 
 ## Current SPARC Portal Tools
 - Details about Transcriptomic_oSPARC, citing accordingly
-## The Problem
+## Challenge Encountered
 - Gene expression visualization integratable (one might even say … interoperable) with SPARC, with a focus on FAIR Principles
-## Our Solution: <Team 7 Project Name>
+## Our Solutiom: <Team 7 Project Name>
 - Detailed discussion of inputs, outputs, pipeline
 - These could all be separate subheadings to maintain organization
 - Can make diagrams to enhance the text
 ## FAIR-Centered Design
 - Specific discussion of how our design is more FAIR than existing
+
 | FAIR Principle | Other Tools | <Team 7 Project Name> |
 | --- | --- | --- |
-| **F**indable |  |  |
-| **A**ccessible |  |  |
-| **I**nteroperable |  |  |
-| **R**eusable |  |  |
+| **F**indable | y | y |
+| **A**ccessible | y | y |
+| **I**nteroperable | y | y |
+| **R**eusable | y | y |
 # Using <Team 7 Project Name>
 ## <Team 7 Project Name> Requirements
 - GNU Make
@@ -151,6 +165,6 @@ $ make run-local # This will start a new Docker container on your computer and r
 5.
 6.
 <br></br>
-Asterick-marked figures were created using [Canva](https://www.canva.com/).
+Logo and figures were created using Microsoft Word; images were formatted using Canva.
 ## Acknowledgements
 - Thanking the SPARC team
