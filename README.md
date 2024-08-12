@@ -76,7 +76,7 @@ As of 8/12/24, the Transcriptomic_oSPARC utility would appear to be the most pro
 ## Challenge Encountered
 Therfore, our team sought to create a RNA-seq visualization utility that supports the specification of **specific parameters**, as well as **interactivity**. There was also room for experimentation in predicting gene ontology with **GSEA**.
 ## Our Solution: sPARcRNA_Viz
-To address this challenge, we present sPARcRNA_Viz, an scRNA-seq visualization tool for potential entry alongside Transcriptomic_oSPARC. In incorporating flexible parameters, interactivity, and an additional DEA metric, sPARcRNA_Viz will complement Transcriptomic_oSPARC as part of a growing SPARC gene expression toolkit.
+To address this challenge, we present **sPARcRNA_Viz**, an scRNA-seq visualization tool for potential entry alongside Transcriptomic_oSPARC. In incorporating flexible parameters, interactivity, and an additional DEA metric, sPARcRNA_Viz will complement Transcriptomic_oSPARC as part of a growing SPARC gene expression toolkit.
 ### sPARcRNA_Viz Pipeline
 Would love input here if possible
 Can make a diagram once the pipeline is establshed
@@ -155,6 +155,8 @@ sPARcRNA_Viz offers a variety of `make` options:
 - Maybe some kind of tutorial if applicable and we have extra time
 - This could possibly consist of sample inputs
 # Additional Information
+## How to Contribute
+Info here
 ## Cite Us
 - All of the winning projects included a citation
 ## License
