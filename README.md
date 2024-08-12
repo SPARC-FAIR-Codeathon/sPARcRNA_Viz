@@ -77,7 +77,8 @@ To address this challenge, we present **sPARcRNA_Viz**, an scRNA-seq visualizati
 
 
 ## FAIR-Centered Design
-Perhaps the **most important** aspect of sPARcRNA_Viz is its emphasis on the FAIR Data Principles. Summarized below are highlight features of sPARcRNA_Viz supporting the FAIR initiative. ## Importance of FAIR Data Principles
+Perhaps the **most important** aspect of sPARcRNA_Viz is its emphasis on the FAIR Data Principles. Summarized below are highlight features of sPARcRNA_Viz supporting the FAIR initiative. 
+## Importance of FAIR Data Principles
 <p align="left">
   <img width="576" alt="Screenshot 2024-08-12 at 9 58 14 AM" src=https://github.com/user-attachments/assets/fc0112ba-ac4e-41fe-92ac-65e5339a6eb7>
 </p>
