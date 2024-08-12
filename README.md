@@ -12,13 +12,13 @@ Easily generate differential expression results from OSparc data
 1. The [Dockerfile](osparc_dex_service/docker/Dockerfile) shall be modified to install the command-line tool you'd like to execute and additional dependencies
 
 All the rest is optional:
-1. The [.osparc](.osparc) is the configuration folder and source of truth for metadata: describes service info and expected inputs/outputs of the service. If you need to change the inputs/outputs of the service, description, thumbnail, etc... check the [`metadata.yml`](./.osparc/metadata.yml) file
-2. If you need to change the start-up behavior of the service, modify the [`service.cli/execute.sh`](./service.cli/execute.sh) file
+1. The [.osparc](.osparc) is the configuration folder and source of truth for metadata: describes service info and expected inputs/outputs of the service. If you need to change the inputs/outputs of the service, description, thumbnail, etc... check the [`metadata.yml`](.osparcetadata.yml) file
+2. If you need to change the start-up behavior of the service, modify the [`service.cli/execute.sh`](service.clixecute.sh) file
 
 
 Testing: 
 1. The service docker image may be built with ``make build`` (see "Useful Commands" below)
-2. The service docker image may be run locally with ``make run-local``. You'll need to edit the [input.json](./validation/input/inputs.json) to execute your command.
+2. The service docker image may be run locally with ``make run-local``. You'll need to edit the [input.json](validationnput/inputs.json) to execute your command.
 
 ### Publish the Service on o²S²PARC
 Once you're happy with your code:
