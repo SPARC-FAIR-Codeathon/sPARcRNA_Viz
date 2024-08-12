@@ -1,0 +1,97 @@
+{
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+    "type": "SoftwareSourceCode",
+    "applicationCategory": "Bioinformatics",
+    "codeRepository": "https://github.com/SPARC-FAIR-Codeathon/2024-team-7",
+    "contributor": [
+        {
+            "id": "https://orcid.org/0009-0004-1527-5864",
+            "type": "Person",
+            "affiliation": {
+                "type": "Organization",
+                "name": "University of Texas at Austin"
+            },
+            "email": "mahithsimham@gmail.com",
+            "familyName": "Simhambhatla",
+            "givenName": "Mahitha"
+        },
+        {
+            "id": "https://orcid.org/0009-0000-5129-4334",
+            "type": "Person",
+            "affiliation": {
+                "type": "Organization",
+                "name": "University of Texas at Austin"
+            },
+            "email": "rainacpatel04@gmail.com",
+            "familyName": "Patel",
+            "givenName": "Raina"
+        },
+        {
+            "id": "https://orcid.org/0000-0002-2316-453X",
+            "type": "Person",
+            "affiliation": {
+                "type": "Organization",
+                "name": "Stanford University"
+            },
+            "email": "msamdars@stanford.edu",
+            "familyName": "Samdarshi",
+            "givenName": "Mihir"
+        },
+        {
+            "id": "https://orcid.org/0000-0003-2829-8032",
+            "type": "Person",
+            "affiliation": {
+                "type": "Organization",
+                "name": "California Medical Innovations Institute"
+            },
+            "email": "ssoundarajan@calmi2.org",
+            "familyName": "Soundarajan",
+            "givenName": "Sanjay"
+        },
+        {
+            "id": "https://orcid.org/0009-0004-4518-8593",
+            "type": "Person",
+            "affiliation": {
+                "type": "Organization",
+                "name": "University of Central Florida"
+            },
+            "email": "thinue2@logicaliron.com",
+            "familyName": "Bratton",
+            "givenName": "Ayla"
+        },
+        {
+            "id": "_:contributor_6",
+            "type": "Person",
+            "email": "vardaanbhat@gmail.com",
+            "familyName": "Bhat",
+            "givenName": "Vardaan"
+        }
+    ],
+    "dateCreated": "2024-08-10",
+    "dateModified": "2024-08-12",
+    "datePublished": "2024-08-12",
+    "description": "An all-in-one gene expression visualization utility integratable with o²S²PARC. Using sPARcRNAViz, researchers can create an interactive t-SNE from single-cell RNA-sequencing data, as well as perform in silico GSEA analysis to determine the most highly expressed genes. From these statistically significant genes, researchers can determine potential gene ontologies arising from their sample(s).",
+    "identifier": "10.5281/zenodo.13308297",
+    "keywords": [
+        "single-cell RNA",
+        "differential gene expression",
+        "tSNE"
+    ],
+    "license": "https://spdx.org/licenses/MIT",
+    "name": "sPARcRNAViz",
+    "operatingSystem": [
+        "Windows",
+        "macOS"
+    ],
+    "programmingLanguage": [
+        "Python 3",
+        "R",
+        "JavaScript",
+        "Vue",
+        "TypeScript",
+        "Astro",
+        "CSS",
+        "HTML"
+    ],
+    "version": "1.0.0"
+}
