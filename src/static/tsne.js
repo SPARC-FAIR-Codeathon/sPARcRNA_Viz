@@ -23,6 +23,8 @@ const BASE_COLORS = [
 const MARGIN = { bottom: 40, left: 40, right: 40, top: 40 };
 const HEIGHT = 1000 - MARGIN.top - MARGIN.bottom;
 
+let NUMBER_OF_CLUSTERS = 0;
+
 // Fetch all required data
 function fetchData() {
   return Promise.all([
@@ -146,7 +148,9 @@ function drawDataPoints(svg, data, X, Y) {
 
     circle.on("mouseover", () => {
       // Gray out all points
-      d3.selectAll(".data-point").transition().attr("fill", "ghostwhite");
+      d3.selectAll(`.data-point:not(.cluster-${point.cluster})`)
+        .transition()
+        .attr("fill", "ghostwhite");
       // Highlight the selected cluster
       d3.selectAll(`.cluster-${point.cluster}`)
         .transition()
@@ -160,12 +164,10 @@ function drawDataPoints(svg, data, X, Y) {
 
     circle.on("mouseout", () => {
       // Reset the color and size of all points
-      for (let i = 0; i < BASE_COLORS.length; i++) {
-        d3.selectAll(`.cluster-${i}`)
-          .transition()
-          .attr("fill", BASE_COLORS[i])
-          .attr("r", radius);
+      for (let i = 0; i < NUMBER_OF_CLUSTERS; i++) {
+        d3.selectAll(`.cluster-${i}`).attr("fill", BASE_COLORS[i]);
       }
+      d3.selectAll(`.cluster-${point.cluster}`).attr("r", radius);
     });
   });
 }
@@ -221,6 +223,9 @@ async function main() {
     if (!tsneData || tsneData.length === 0) {
       throw new Error("No data received or empty data set");
     }
+
+    NUMBER_OF_CLUSTERS = Object.keys(clusterInfo).length;
+
     drawSVG(tsneData, clusterInfo);
     console.log("Visualization completed successfully");
   } catch (error) {
