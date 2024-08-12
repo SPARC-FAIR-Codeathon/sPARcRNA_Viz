@@ -1,0 +1,19 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="TSNE">
+  <main class="bg-white w-full h-full">
+    <h1>T-SNE</h1>
+
+    <hr />
+
+    <div id="chart" class="py-3 w-max"></div>
+
+    <hr />
+
+    <pre id="pre-data"></pre>
+  </main>
+</Layout>
+
+<script src="../scripts/tsne-render.ts"></script>
