@@ -1,8 +1,13 @@
 # Docker base image, change if needed
 FROM ubuntu:24.04 AS base
 
-ENV NODE_VERSION "22.x"
-ENV ARCH "amd64"
+ENV NODE_VERSION="22.x" \
+    ARCH="amd64" \
+    DEBIAN_FRONTEND="noninteractive" \
+    LC_ALL="C.UTF-8" \
+    LANG="C.UTF-8" \
+    LANGUAGE="C.UTF-8"
+
 # ------------------------------------------------------------------------------------
 # Install system packages and R
 RUN apt-get update \
@@ -26,8 +31,8 @@ RUN apt-get update \
 # ------------------------------------------------------------------------------------
 # oSPARC compatibility, do not modify
 # simcore-user uid=8004(${SC_USER_NAME}) gid=8004(${SC_USER_NAME}) groups=8004(${SC_USER_NAME})
-ENV SC_USER_ID 8004
-ENV SC_USER_NAME scu
+ENV SC_USER_ID=8004
+ENV SC_USER_NAME=scu
 RUN adduser --uid ${SC_USER_ID} --disabled-password --gecos "" --shell /bin/sh --home /home/${SC_USER_NAME} ${SC_USER_NAME}
 # ------------------------------------------------------------------------------------
 
@@ -57,8 +62,8 @@ RUN chmod +x /home/${SC_USER_NAME}/dex.R
 # --------------------------------- Final setup  --------------------------------------
 # Do not modify
 
-ENV INPUT_FOLDER "/input"
-ENV OUTPUT_FOLDER "/output"
+ENV INPUT_FOLDER="/input" \
+    OUTPUT_FOLDER="/output"
 
 WORKDIR /home/${SC_USER_NAME}
 
