@@ -84,6 +84,23 @@ sPARcRNA_Viz currently supports .csv/.tsv (barcode and feature files), .mtx (mat
 *confirm*
 <br></br>
 ## sPARcRNA_Viz Workflow
+Can refer to Pipeline README.md (add link)
+### 1. Setup
+Load libraries, set options, validate and prepare the directories, find and read raw data files, configure based on inputs
+### 2. Create Seurat object
+Seurat is an R package designed for QC, analysis, and exploration of single-cell RNA-seq data
+### 3. Normalize and preprocess the data
+Normalize (so that data reflects true biological differences), find variable features, scale (to standardize the data), perform PCA (Principal Component Analysis to reduce dimensionality), cluster cells with similar profiles together
+### 4. t-SNE
+t-SNE allows us to visualize statistically significant genes based on these clusters. From these, researchers can determine potential gene ontologies arising from their sample(s).
+### 5. Differential Gene Expression Analysis
+Differential gene expression analysis takes the normalized gene read counts and allows researchers to determine quantitative changes in gene expression. 
+### 6. GSEA
+GSEA, or Gene set enrichment analysis, helps determine the gene groups that are highly represented in the data.
+### 7. Combine t-SNE and GSEA results
+All the cluster results after running GSEA are saved, and the top pathways are saved as well.
+### 8. Export and Display Results
+All values from the previous steps and top clusters, pathways, etc are saved in a json file that is later visualized
 
 ## Configuring sPARcRNA_Viz
 sPARcRNA_Viz offers a variety of `make` options:
@@ -105,11 +122,10 @@ sPARcRNA_Viz offers a variety of `make` options:
 ## Tutorial
 - Maybe some kind of tutorial if applicable and we have extra time
 - This could possibly consist of sample inputs
-
 ## Future Vision
 sPARcRNA_Viz would be expanded to include other interactive visualizations and API calls to other gene databases. This would provide more ways to analyze genes and integrate with other websites.
 
-## FAIR-Centered Design
+# FAIR-Centered Design
 Perhaps the **most important** aspect of sPARcRNA_Viz is its emphasis on the FAIR Data Principles. Summarized below are highlight features of sPARcRNA_Viz supporting the FAIR initiative. 
 ## Importance of FAIR Data Principles
 <p align="left">
@@ -142,15 +158,38 @@ Fork this repository and submit a pull request to contribute.
 ## FAIR Practices
 sPARcRNA_Viz is designed around the use of FAIR Practices. Further explanation as to FAIR Principle adherence is included in this [document](https://docs.google.com/document/d/1Me_6LzF9eMdD2Bhh9df7ncxRGepV7pU6kBUjl15Dyhw/edit?usp=sharing).
 ## Team
-- It seems all the Grand Prize-winning teams listed the recommended team roles here (Lead, Writer, Sysadmin, etc.)
+- Mihir Samdarshi (Lead, Sysadmin, Developer)
+- Sanjay Soundarajan (Sysadmin, Developer)
+- Mahitha Simhambhatla (Developer, Writer)
+- Raina Patel (Writer)
+- Ayla Bratton (Writer)
+- Vardaan Bhat (TBD)
 ## Materials Cited
-(Will probably change to APA)
-1. 
-2. https://www.pnas.org/doi/abs/10.1073/pnas.0506580102
-3. https://www.nature.com/articles/sdata201618
-4. https://www.go-fair.org/fair-principles/
-5. https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-02096-y
-6. Ben Aribi H, Ding M and Kiran A. Gene expression data visualization tool on the o²S²PARC platform [version 2; peer review: 2 approved]. F1000Research 2023, 11:1267 (https://doi.org/10.12688/f1000research.126840.2)
+<a id="1">[1]</a>
+Ben Aribi, H., Ding, M., & Kiran, A. (2023). 
+Gene expression data visualization tool on the o2S2PARC platform. 
+F1000Research, 11, 1267.
+https://www.pnas.org/doi/abs/10.1073/pnas.0506580102<br />
+<a id="2">[2]</a>
+EMBL-EBI. (n.d.).
+Differential gene expression analysis | Functional genomics II.
+https://www.ebi.ac.uk/training/online/courses/functional-genomics-ii-common-technologies-and-data-analysis-methods/rna-sequencing/performing-a-rna-seq-experiment/data-analysis/differential-gene-expression-analysis/ <br />
+<a id="3">[3]</a>
+GO FAIR.(2017).
+FAIR Principles - GO FAIR. GO FAIR.
+https://www.go-fair.org/fair-principles/<br />
+<a id="4">[4]</a>
+Kim, T. H., Zhou, X., & Chen, M. (2020). Demystifying “drop-outs” in single-cell UMI data. Genome Biology, 21(1). 
+https://doi.org/10.1186/s13059-020-02096-y <br />
+<a id="5">[5]</a>
+Subramanian, A., Tamayo, P., Mootha, V. K., Mukherjee, S., Ebert, B. L., Gillette, M. A., Paulovich, A., Pomeroy, S. L., Golub, T. R., Lander, E. S., & Mesirov, J. P. (2005).
+Gene set enrichment analysis: A knowledge-based approach for interpreting genome-wide expression profiles.
+Proceedings of the National Academy of Sciences, 102(43), 15545–15550. 
+https://doi.org/10.1073/pnas.0506580102 <br />
+<a id="6">[6]</a>
+Wilkinson, M. D., Dumontier, M., Aalbersberg, Ij. J., Appleton, G., Axton, M., Baak, A., Blomberg, N., Boiten, J.-W., da Silva Santos, L. B., Bourne, P. E., Bouwman, J., Brookes, A. J., Clark, T., Crosas, M., Dillo, I., Dumon, O., Edmunds, S., Evelo, C. T., Finkers, R., & Gonzalez-Beltran, A. (2016).
+The FAIR Guiding Principles for Scientific Data Management and Stewardship. Scientific Data, 3(1). 
+https://www.nature.com/articles/sdata201618 <br />
 <br></br>
 Logo and figures were created using Microsoft Word; images were formatted using Canva.
 ## Acknowledgements
