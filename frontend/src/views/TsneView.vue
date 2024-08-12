@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { faker } from '@faker-js/faker'
+import ApexCharts from 'apexcharts'
 import { consola } from 'consola'
 import * as d3 from 'd3'
 import { onMounted, ref } from 'vue'
@@ -57,7 +58,7 @@ const euclideanDistance = (a: number[], b: number[]) => {
 const init = async () => {
   calculatingDistance.value = true
 
-  const data = await fetch('http://localhost:3001/getData/100')
+  const data = await fetch('http://localhost:3001/getData/75')
 
   points.value = []
 
@@ -141,8 +142,14 @@ const drawCanvas = () => {
 
   // const svgContainer = d3.select('.svg-demo')
 
-  const xExtent = d3.extent(solution.value, (d) => parseFloat(d[dimX]))
-  const yExtent = d3.extent(solution.value, (d) => parseFloat(d[dimY]))
+  const xExtent = d3.extent(solution.value, (d) => parseFloat(d[dimX] as unknown as string)) as [
+    number,
+    number
+  ]
+  const yExtent = d3.extent(solution.value, (d) => parseFloat(d[dimY] as unknown as string)) as [
+    number,
+    number
+  ]
 
   const X = d3
     .scaleLinear()
@@ -166,7 +173,8 @@ const drawCanvas = () => {
       .attr('r', 10)
       .attr('stroke', 'black')
       .attr('stroke-width', 1)
-      .attr('fill', getCategoryColor(responseData.value[i].genre))
+      .attr('fill', 'gray')
+      // .attr('fill', getCategoryColor(responseData.value[i].genre))
       .on('click', () => {
         consola.info(responseData.value[i])
       })
@@ -175,13 +183,16 @@ const drawCanvas = () => {
       .on('mouseover', () => {
         // Increase the radius of all the circles with the same genre
         const genre = responseData.value[i].genre
-        d3.selectAll(`.genre-${genre}`).transition().attr('r', 15)
+        d3.selectAll(`.genre-${genre}`).transition().attr('r', 12)
+        const color = getCategoryColor(genre)
+        d3.selectAll(`.genre-${genre}`).transition().attr('fill', color)
       })
       // gently decrease the radius of the circle
       .on('mouseout', () => {
         // Decrease the radius of all the circles with the same genre
         const genre = responseData.value[i].genre
         d3.selectAll(`.genre-${genre}`).transition().attr('r', 10)
+        d3.selectAll(`.genre-${genre}`).transition().attr('fill', 'gray')
       })
   })
 }
@@ -241,8 +252,31 @@ const drawCanvas = () => {
 //   })
 // }
 
+const secondaryInit = () => {
+  var options = {
+    chart: {
+      height: 350,
+      type: 'line'
+    },
+    series: [
+      {
+        name: 'sales',
+        data: [30, 40, 35, 50, 49, 60, 70, 91, 125]
+      }
+    ],
+    xaxis: {
+      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+    }
+  }
+
+  var chart = new ApexCharts(document.querySelector('#second-chart'), options)
+
+  chart.render()
+}
+
 onMounted(() => {
   init()
+  secondaryInit()
 })
 </script>
 
@@ -261,7 +295,9 @@ onMounted(() => {
 
     <div id="chart"></div>
 
-    <canvas id="tsne" ref="tsne" height="800" width="800" class="bg-slate-50/20 hidden" />
+    <n-divider />
+
+    <div id="second-chart" class="w-full max-h-96"></div>
 
     <n-divider />
 
