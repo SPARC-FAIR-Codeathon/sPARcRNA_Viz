@@ -142,8 +142,14 @@ const drawCanvas = () => {
 
   // const svgContainer = d3.select('.svg-demo')
 
-  const xExtent = d3.extent(solution.value, (d) => parseFloat(d[dimX]))
-  const yExtent = d3.extent(solution.value, (d) => parseFloat(d[dimY]))
+  const xExtent = d3.extent(solution.value, (d) => parseFloat(d[dimX] as unknown as string)) as [
+    number,
+    number
+  ]
+  const yExtent = d3.extent(solution.value, (d) => parseFloat(d[dimY] as unknown as string)) as [
+    number,
+    number
+  ]
 
   const X = d3
     .scaleLinear()

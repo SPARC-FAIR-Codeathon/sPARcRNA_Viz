@@ -7,6 +7,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
+import { viteSingleFile } from 'vite-plugin-singlefile'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vitejs.dev/config/
@@ -63,7 +64,8 @@ export default defineConfig({
     Components({
       // resolvers for custom components
       resolvers: [NaiveUiResolver()]
-    })
+    }),
+    viteSingleFile()
   ],
   resolve: {
     alias: {
