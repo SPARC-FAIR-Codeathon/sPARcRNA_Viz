@@ -82,7 +82,7 @@ sPARcRNA_Viz currently supports the following file format: **.csv/.tsv** (barcod
 ## sPARcRNA_Viz Pipeline Workflow
 Can refer to [Pipeline Documentation](PIPELINE.md).
 ### 1. Setup
-Load libraries, set options, validate and prepare the directories; find and read raw data files; configure based on inputs
+Load libraries, set options, validate and prepare the directories; find and read raw data files; configure based on inputs.
 ### 2. Create Seurat object
 [Seurat](https://cran.r-project.org/web/packages/Seurat/index.html) is an R package specially designed for the quality control (QC) , analysis, and exploration of single-cell RNA-seq data. Thus, it proved to be a suitable choice for the purposes of sPARcRNA_Viz.
 ### 3. Normalize and preprocess the data
