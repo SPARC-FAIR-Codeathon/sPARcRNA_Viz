@@ -30,6 +30,34 @@
   - [Team](#team)
   - [Materials Cited](#materials-cited)
   - [Acknowledgements](#acknowledgements)
+ 
+- [About](#about)
+- [Research Purpose](#research-purpose)
+  - [Introduction](#introduction)
+  - [Background](#background)
+  - [Current SPARC Portal Tools](#current-SPARC-portal-tools)
+  - [The Problem:](#the-problem)
+  - [Our Solution: sPARcRNA_Viz](#our-solution-sparcrna_Viz)
+  - [FAIR-Centered Design](#fair-centered-design)
+  - [Future Vision](#future-vision)
+- [Using sPARcRNA_Viz](#using-sparcrna_Viz)
+  - [sPARcRNA_Viz Requirements](#sparcrna_Viz-requirements)
+  - [sPARcRNA_Viz Pipeline_Workflow](#sparcrna_Viz-pipeline-workflow)
+  - [Configuring sPARcRNA_Viz](#configuring-sPARcRNA_Viz)
+  - [Tutorial](#tutorial)
+  - [Future Vision](#future_vision)
+- [FAIR-Centered Design](#FAIR-centered-design)
+  - [Importance of FAIR Data Principles](#importance-of-FAIR-data-principles)
+  - [Summary of FAIR Principles Application](#summary-of-FAIR-principles-application)
+- [Additional Information](#additional-information)
+  - [Issue Reporting](#issue-reporting)
+  - [How to Contribute](#how-to-contribute)
+  - [Cite Us](#cite-us)
+  - [License](#license)
+  - [FAIR Practices](#fair-practices)
+  - [Team](#team)
+  - [Materials Cited](#materials-cited)
+  - [Acknowledgements](#acknowledgements)
 # About
 Easily generate differential expression results from [SPARC](https://sparc.science) scRNA-seq data in a FAIR manner.
 # Research Purpose
@@ -83,7 +111,7 @@ To address this challenge, we present **sPARcRNA_Viz**, an scRNA-seq visualizati
 sPARcRNA_Viz currently supports .csv/.tsv (barcode and feature files), .mtx (matrix file) single-cell matrices along with R data. These formats and 3 files are required to run the analysis successfully.
 *confirm*
 <br></br>
-## sPARcRNA_Viz Pipeline
+## sPARcRNA_Viz Pipeline Workflow
 Can refer to Pipeline README.md (add link)
 ### 1. Setup
 Load libraries, set options, validate and prepare the directories, find and read raw data files, configure based on inputs
@@ -193,4 +221,4 @@ https://www.nature.com/articles/sdata201618 <br />
 <br></br>
 Logo and figures were created using Microsoft Word; images were formatted using Canva.
 ## Acknowledgements
-- Thanking the SPARC team
+- We would like to thank the SPARC Codeathon 2024 team for all their guidance and support.
