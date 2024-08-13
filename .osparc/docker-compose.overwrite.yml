@@ -1,0 +1,5 @@
+version: "3.7"
+services:
+  osparc-differential-expression:
+    build:
+      dockerfile: docker/Dockerfile

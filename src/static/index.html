@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="generator" />
+    <title>Visualizations</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"
+      integrity="sha512-vc58qvvBdrDR4etbxMdlTt4GBQk1qjvyORR2nrsPsFPyrs+/u5c3+1Ct6upOgdZoIl7eq6k3a1UPDSNAQi/32A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://d3js.org/d3-polygon.v2.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="tsne.js"></script>
+
+    <script src="./raw_data_js/cluster_avg_expression.js"></script>
+    <script src="./raw_data_js/cluster_info.js"></script>
+    <script src="./raw_data_js/gsea_cluster_results.js"></script>
+    <script src="./raw_data_js/gsea_results.js"></script>
+    <script src="./raw_data_js/integrated_tsne_gsea.js"></script>
+    <script src="./raw_data_js/top10_markers.js"></script>
+    <script src="./raw_data_js/tsne_data.js"></script>
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="h-full">
+    <div class="min-h-full">
+      <header class="bg-white shadow">
+        <div
+          class="mx-auto max-w-7xl px-4 py-6 flex justify-between w-full items-center"
+        >
+          <h1 class="text-3xl font-bold tracking-tight text-gray-900">
+            <span id="mode-span">t-SNE</span>
+            Analysis
+          </h1>
+
+          <select
+            id="mode-select"
+            class="mt-4 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm hidden"
+          >
+            <option value="tsne" selected>t-SNE</option>
+            <option value="umap">UMAP</option>
+          </select>
+        </div>
+      </header>
+
+      <main>
+        <div class="mx-auto p-6">
+          <div class="flex justify-between space-x-4">
+            <div id="chart" class="bg-white rounded-lg p-4 w-3/4">
+              <!-- Chart will be rendered here -->
+            </div>
+
+            <div class="w-1/4 space-y-4">
+              <div id="cluster-info-panel">
+                <!-- Cluster info will be rendered here -->
+              </div>
+
+              <div id="gsea-info-panel">
+                <!-- GSEA info will be rendered here -->
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-6 border-t" id="top10-markers">
+            <h2 class="text-xl font-semibold mb-2">Top 10 Markers</h2>
+
+            <div
+              class="bg-white rounded-lg p-4 flex gap-4 items-start justify-evenly"
+            >
+              <div id="top10-markers-heatmap" class="bg-white rounded-lg p-4">
+                <!-- Top 10 markers heatmap will be rendered here -->
+              </div>
+
+              <div>
+                <select
+                  id="top10-markers-select"
+                  class="block w-full mt-4 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                ></select>
+
+                <div
+                  id="top10-markers-avg-expression"
+                  class="bg-white rounded-lg p-4"
+                >
+                  <!-- Top 10 markers average expression will be rendered here -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 hidden">
+            <h2 class="text-xl font-semibold mb-2">Raw Data</h2>
+            <pre
+              id="pre-data"
+              class="bg-gray-50 rounded-lg p-4 overflow-x-auto text-sm"
+            ><!-- Raw data will be displayed here --></pre>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
