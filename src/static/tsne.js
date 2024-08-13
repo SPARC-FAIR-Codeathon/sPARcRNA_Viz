@@ -31,6 +31,7 @@ function fetchData() {
     Promise.resolve(tsne_data_json),
     Promise.resolve(cluster_info_json),
     Promise.resolve(gsea_results_json),
+    Promise.resolve(top10_markers_json),
   ]);
 }
 
@@ -216,6 +217,69 @@ function drawSVG(data, clusterInfo) {
   drawCentroids(svg, clusterInfo, scales.X, scales.Y);
 }
 
+function drawTop10MarkersHeatmap(data) {
+  const container = document.getElementById("top10-markers-heatmap");
+
+  if (!container) {
+    throw new Error("top10-markers-heatmap element not found");
+  }
+
+  const clusters = [...new Set(data.map((d) => d.cluster))];
+  const genes = [...new Set(data.map((d) => d.gene))];
+
+  // Check which genes appear in more than one cluster
+  const geneCounts = genes.reduce((acc, gene) => {
+    acc[gene] = data.filter((d) => d.gene === gene).length;
+    return acc;
+  }, {});
+
+  const filteredGenes = genes.filter((gene) => geneCounts[gene] > 1);
+
+  // Create a 2D array to store the avg_logFC values for each gene in each cluster
+  const reshapedData = [];
+
+  for (let i = 0; i < clusters.length; i++) {
+    reshapedData.push({
+      name: `Cluster ${i}`,
+      data: [],
+    });
+  }
+
+  for (let i = 0; i < filteredGenes.length; i++) {
+    const gene = filteredGenes[i];
+    const geneData = data.filter((d) => d.gene === gene);
+
+    for (let j = 0; j < clusters.length; j++) {
+      const clusterData = geneData.filter((d) => d.cluster === clusters[j]);
+      const avgLogFC = d3.mean(clusterData, (d) => d.avg_log2FC);
+      reshapedData[j].data.push(avgLogFC || 0.0);
+    }
+  }
+
+  const options = {
+    series: reshapedData,
+    chart: {
+      type: "heatmap",
+      height: 350,
+    },
+    xaxis: {
+      categories: filteredGenes,
+    },
+  };
+
+  var chart = new ApexCharts(container, options);
+  chart.render();
+}
+
+function drawTop10Markers(data) {
+  const container = document.getElementById("top10-markers");
+  if (!container) {
+    throw new Error("top10-markers element not found");
+  }
+
+  drawTop10MarkersHeatmap(data);
+}
+
 // Main execution function
 async function main() {
   try {
@@ -227,6 +291,7 @@ async function main() {
     NUMBER_OF_CLUSTERS = Object.keys(clusterInfo).length;
 
     drawSVG(tsneData, clusterInfo);
+    drawTop10Markers(top10_markers_json);
     console.log("Visualization completed successfully");
   } catch (error) {
     console.error("An error occurred in main execution:", error);
