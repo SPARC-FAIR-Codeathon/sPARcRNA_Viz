@@ -26,7 +26,6 @@
   - [How to Contribute](#how-to-contribute)
   - [Cite Us](#cite-us)
   - [License](#license)
-  - [FAIR Practices](#fair-practices)
   - [Team](#team)
   - [Materials Cited](#materials-cited)
   - [Acknowledgements](#acknowledgements)
@@ -57,10 +56,8 @@ sPARcRNA_Viz provides the user with the ability to fine-tune multiple **gene exp
 - HTML
 - JavaScript
 - Tailwind CSS
-<br></br>
-Can make a visual once this is finalized
 ## Background
-In recent years, **single-cell RNA-sequencing** (scRNA-seq) has emerged as a preeminent method for the analysis of gene expression in biological tissue, providing researchers access to genetic data previously inaccessible. This is largely due to advancements in wet lab and dry leb techniques, as well computing power, where these improvements enable the collection of large datasets often spanning hundreds of millions of entries. With this newfound wealth of data, a need has arisen for high-efficiency bioinformatics pipelines and tools that allow for the analysis of scRNA-seq data. Thus, one computational method currently in use is **differential gene expression (DGE) analysis**, which identifies statistically significant genes (i.e., results that are minimally confounded by experimental errors) and determines the expression level of a gene relative to the entire dataset. Using these statistically significant results, it is possible to correlate the most highly expressed genes to their tangible, biological effects through the use of **gene ontology** databases such as the [Gene Ontology Knowledgebase (GO)](https://www.geneontology.org/).
+In recent years, **single-cell RNA-sequencing** (scRNA-seq) has emerged as a preeminent method for the analysis of gene expression in biological tissue, providing researchers access to genetic data previously inaccessible. This is largely due to advancements in wet lab and dry leb techniques, as well computing power, where these improvements enable the collection of large datasets often spanning hundreds of millions of entries. With this newfound wealth of data, a need has arisen for high-efficiency bioinformatics pipelines and tools that allow for the analysis of scRNA-seq data. One computational method currently in use is **differential gene expression (DGE) analysis**, which identifies statistically significant genes (i.e., results that are minimally confounded by experimental errors) and determines the expression level of a gene relative to the entire dataset. Using these statistically significant results, it is possible to correlate the most highly expressed genes to their tangible, biological effects through the use of **gene ontology** databases such as the [Gene Ontology Knowledgebase (GO)](https://www.geneontology.org/).
 <br></br>
 The SPARC Portal currently hosts a rich collection of scRNA-seq data across several different tissues and species. Therefore, the SPARC platform could be further enhanced by the inclusion of data visualization and the aforementioned DGE tools. This is achieved in sPARcRNA_Viz through the use of **t-SNE plotting** and **GSEA**.
 ### About t-SNE Plots
@@ -71,7 +68,7 @@ Gene Set Enrichment Analysis (GSEA) is a popular technique for determining stati
 ## Current SPARC Portal Tools
 As of 8/12/24, the [Transcriptomic_oSPARC](https://github.com/SPARC-FAIR-Codeathon/Transcriptomic_oSPARC) utility would appear to be the most prominent SPARC tool relating to the analysis gene expression. This tool is very effective in displaying industry-standard static graphical outputs, which can prove quite useful to researchers. However, a limitation may perhaps exist in the current customization level; it may be necessary to edit the code itself to change particular parameters. There was also a niche to explore in adding interactivity to the graphs, further enahncing the user experience.
 ## The Problem
-The gene expression data in SPARC is somewhat limited and is in a raw data format, making it not as interoperable. Our goal was to make it more interoperable and easy to use. Therefore, our team sought to create a RNA-seq visualization utility that supports the specification of **specific parameters**, as well as **interactivity**. There was also room for experimentation in predicting gene ontology with **GSEA**.
+The gene expression data in SPARC is somewhat limited and is in a raw data format, rendering it less interoperable. Our goal was to make it more interoperable and easy to use. Therefore, our team sought to create a RNA-seq visualization utility that supports the specification of **specific parameters**, as well as **interactivity**. There was also room for experimentation in predicting gene ontology with **GSEA**.
 ## Our Solution: sPARcRNA_Viz
 To address this challenge, we present **sPARcRNA_Viz**, an scRNA-seq visualization tool for potential entry alongside Transcriptomic_oSPARC. In incorporating flexible parameters, interactivity, and an additional DEA metric, sPARcRNA_Viz will complement Transcriptomic_oSPARC as part of a growing SPARC gene expression toolkit.
 
@@ -81,30 +78,28 @@ To address this challenge, we present **sPARcRNA_Viz**, an scRNA-seq visualizati
 - Python3
 - [``Docker``](https://docs.docker.com/get-docker/) (if you wish to build and test the service locally)
 ### Required Input Format
-sPARcRNA_Viz currently supports .csv/.tsv (barcode and feature files), .mtx (matrix file) single-cell matrices along with R data. These formats and 3 files are required to run the analysis successfully.
-*confirm*
-<br></br>
+sPARcRNA_Viz currently supports the following file format: .csv/.tsv (barcode and feature files), .mtx (matrix file) single-cell matrices along with R data. These formats and 3 files are required to run the analysis successfully.
 ## sPARcRNA_Viz Pipeline Workflow
-Can refer to Pipeline README.md (add link)
+Can refer to [Pipeline Documentation](add link).
 ### 1. Setup
-Load libraries, set options, validate and prepare the directories, find and read raw data files, configure based on inputs
+Load libraries, set options, validate and prepare the directories; find and read raw data files; configure based on inputs
 ### 2. Create Seurat object
-Seurat is an R package designed for QC, analysis, and exploration of single-cell RNA-seq data
+Seurat is an R package specially designed for the quality control (QC) , analysis, and exploration of single-cell RNA-seq data. Thus, it proved to be a suitable choice for the purposes of sPARcRNA_Viz.
 ### 3. Normalize and preprocess the data
-Normalize (so that data reflects true biological differences), find variable features, scale (to standardize the data), perform PCA (Principal Component Analysis to reduce dimensionality), cluster cells with similar profiles together
+Normalize (so that data reflects true biological differences); find variable features; scale (to standardize the data); perform PCA (Principal Component Analysis to reduce dimensionality); and cluster cells with similar profiles together
 ### 4. t-SNE
 t-SNE allows us to visualize statistically significant genes based on these clusters. From these, researchers can determine potential gene ontologies arising from their sample(s).
 ### 5. Differential Gene Expression Analysis
 Differential gene expression analysis takes the normalized gene read counts and allows researchers to determine quantitative changes in gene expression. 
 ### 6. GSEA
-GSEA, or Gene set enrichment analysis, helps determine the gene groups that are highly represented in the data.
+GSEA aids in determining gene groups highly represented in the data.
 ### 7. Combine t-SNE and GSEA results
 All the cluster results after running GSEA are saved, and the top pathways are saved as well.
 ### 8. Export and Display Results
-All values from the previous steps and top clusters, pathways, etc are saved in a json file that is later visualized
+All values from the previous steps and top clusters, pathways, etc are saved in a Seurat object that is later visualized. The user can optionally convert this data into .csv file format.
 
 ## Configuring sPARcRNA_Viz
-sPARcRNA_Viz offers a variety of `make` options:
+sPARcRNA_Viz offers a variety of command options:
 | Option | Description | Default |
 | --- | --- | --- |
 | `-i`, `--input` | Input directory path | `'validation/input/data/'` |
@@ -122,23 +117,23 @@ sPARcRNA_Viz offers a variety of `make` options:
 | `--category` | MSigDB category for GSEA | `"H"` |
 ## Tutorial
 The [scRNA-seq data]() used in the tutorial is from the SPARC Portal.
-### 1. Log in to osparc
+### 1. Log in to [o²S²PARC](https://osparc.io/)
 <img width="500" alt="Screenshot 2024-08-12 at 9 36 07 PM" src="https://github.com/user-attachments/assets/5e295cbc-184a-42e9-b85b-8ad82bcc57a0">
 
-### 2. Open new study
+### 2. Open a new Study
 <img width="201" alt="Screenshot 2024-08-12 at 9 35 10 PM" src="https://github.com/user-attachments/assets/ced50573-fbf9-458f-8912-29374ad3c26f">
 
-### 3. Add 3 file nodes and upload the 10x genomics data
+### 3. Add 3 File Picker Nodes and upload the required data
 <img width="500" alt="Screenshot 2024-08-12 at 8 52 18 PM" src="https://github.com/user-attachments/assets/c565355d-8e57-43a1-aade-d653be2d2853">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/c992bcbb-c061-46f0-a611-28753686e0ed">
 <img width="500" alt="Screenshot 2024-08-12 at 9 34 49 PM" src="https://github.com/user-attachments/assets/0925c0d3-e128-4bb8-992b-62288973f005">
 <br></br>
 (Alternatively, drag and drop the needed files into the workspace.)
 
-### 4. Add sPARcRNA_Viz node
+### 4. Add sPARcRNA_Viz Node
 <img width="500" alt="Screenshot 2024-08-12 at 9 33 34 PM" src="https://github.com/user-attachments/assets/43b92fb3-44e4-42ea-ada2-bbf2bc866528">
 
-### 5. Connect the nodes
+### 5. Connect the 
 <img width="500" alt="Screenshot 2024-08-12 at 9 34 08 PM" src="https://github.com/user-attachments/assets/f49395fe-d51b-4ec1-88f9-b4eae37ce0a9">
 
 ### 6. Optional run outputs through JupyterLab R for further analysis
@@ -165,8 +160,6 @@ Particularly in the case of scRNA-seq data, which is expensive from both a wet a
 | **I**nteroperable | May not allow for connections between datasets | Through its use of GSEA, sPARcRNA_Viz allows for the meaningful connection of datasets: scRNA-seq data can be used in association with gene ontology. In addition, visualizations generated for each dataset can be compared with each other |
 | **R**eusable | May only support the formatting of one dataset | sPARcRNA_Viz be used with multiple datasets due to the ability to specify parameters. Likewise, sPARcRNA_Viz offers a security benefit through its use of input validation |
 
-Additional information surrounding these applications is detailed in the sPARcRNA_Viz FAIR Practices document found [here](#fair-practices).
-
 # Additional Information
 ## Issue Reporting
 Please utilize the **Issues** tab of this repository should you encounter any problems with sPARcRNA_Viz.
@@ -176,8 +169,6 @@ Fork this repository and submit a pull request to contribute.
 - All of the winning projects included a citation
 ## License
 - sPARcRNA_Viz is distributed under the MIT License.
-## FAIR Practices
-sPARcRNA_Viz is designed around the use of FAIR Practices. Further explanation as to FAIR Principle adherence is included in this [document](https://docs.google.com/document/d/1Me_6LzF9eMdD2Bhh9df7ncxRGepV7pU6kBUjl15Dyhw/edit?usp=sharing).
 ## Team
 - Mihir Samdarshi (Lead, Sysadmin, Developer)
 - Sanjay Soundarajan (Sysadmin, Developer)
