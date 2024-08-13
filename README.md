@@ -80,7 +80,7 @@ To address this challenge, we present **sPARcRNA_Viz**, an scRNA-seq visualizati
 - Python3
 - [``Docker``](https://docs.docker.com/get-docker/) (if you wish to build and test the service locally)
 ### Required Input Format
-sPARcRNA_Viz currently supports .csv/.tsv (barcode and feature files), .mtx (matrix file) single-cell matrices. These formats and 3 files are required to run the analysis successfully.
+sPARcRNA_Viz currently supports .csv/.tsv (barcode and feature files), .mtx (matrix file) single-cell matrices along with R data. These formats and 3 files are required to run the analysis successfully.
 *confirm*
 <br></br>
 ## sPARcRNA_Viz Workflow
