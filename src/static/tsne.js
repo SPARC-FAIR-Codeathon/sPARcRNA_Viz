@@ -148,27 +148,21 @@ function drawDataPoints(svg, data, X, Y) {
       .attr("stroke-width", 0.5);
 
     circle.on("mouseover", () => {
-      // Gray out all points
-      d3.selectAll(`.data-point:not(.cluster-${point.cluster})`)
-        .transition()
-        .attr("fill", "ghostwhite");
       // Highlight the selected cluster
       d3.selectAll(`.cluster-${point.cluster}`)
-        .transition()
-        .attr("fill", BASE_COLORS[parseInt(point.cluster)])
-        .attr("r", radius + 2);
+      .attr("r", radius + 2);
     });
 
     circle.on("click", () => {
       generateClusterInfo(point);
+
+      const clusterSelect = document.getElementById("top10-markers-select");
+
+      clusterSelect.value = point.cluster;
     });
 
     circle.on("mouseout", () => {
-      // Reset the color and size of all points
-      for (let i = 0; i < NUMBER_OF_CLUSTERS; i++) {
-        d3.selectAll(`.cluster-${i}`).attr("fill", BASE_COLORS[i]);
-      }
-      d3.selectAll(`.cluster-${point.cluster}`).attr("r", radius);
+      d3.selectAll(`.data-point`).attr("r", radius);
     });
   });
 }
@@ -280,6 +274,47 @@ function drawTop10Markers(data) {
   drawTop10MarkersHeatmap(data);
 }
 
+function drawTop10AverageExpression(cluster) {
+  const data = top10_markers_json;
+
+  const filteredData = data.filter((d) => d.cluster === cluster);
+
+  const container = document.getElementById("top10-markers-avg-expression");
+
+  if (!container) {
+    throw new Error("top10-markers-avg-expression element not found");
+  }
+
+  container.innerHTML = "";
+
+  const options = {
+    series: [
+      {
+        name: "avg_logFC",
+        data: filteredData.map((d) => d.avg_log2FC),
+      },
+    ],
+    chart: {
+      type: "bar",
+      height: 350,
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 4,
+        borderRadiusApplication: "end",
+        horizontal: true,
+      },
+    },
+    xaxis: {
+      categories: filteredData.map((d) => d.gene),
+      name: "avg_logFC",
+    },
+  };
+
+  var chart = new ApexCharts(container, options);
+  chart.render();
+}
+
 // Main execution function
 async function main() {
   try {
@@ -291,7 +326,21 @@ async function main() {
     NUMBER_OF_CLUSTERS = Object.keys(clusterInfo).length;
 
     drawSVG(tsneData, clusterInfo);
+
+    const clusterSelect = document.getElementById("top10-markers-select");
+
+    const clusterOptions = Object.keys(clusterInfo).map((cluster) => {
+      return `<option value="${cluster}">Cluster ${cluster}</option>`;
+    });
+
+    clusterSelect.innerHTML = clusterOptions.join("");
+    clusterSelect.addEventListener("change", (e) => {
+      const cluster = e.target.value;
+      drawTop10AverageExpression(cluster);
+    });
+
     drawTop10Markers(top10_markers_json);
+    drawTop10AverageExpression("0");
     console.log("Visualization completed successfully");
   } catch (error) {
     console.error("An error occurred in main execution:", error);
