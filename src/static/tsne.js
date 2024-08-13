@@ -103,7 +103,7 @@ function generateClusterInfo(point) {
     <div class="bg-white shadow-md rounded-lg p-6">
       <h2 class="text-lg font-semibold mb-2 flex gap-2 items-center">
       <span>Cluster Info</span> 
-       <div class="h-2 w-2 border" style="background-color: ${
+       <div class="h-3 w-3 border" style="background-color: ${
          BASE_COLORS[point.cluster]
        }"></div>
       </h2>
@@ -343,7 +343,9 @@ async function main() {
     const clusterSelect = document.getElementById("top10-markers-select");
 
     const clusterOptions = Object.keys(clusterInfo).map((cluster) => {
-      return `<option value="${cluster}">Cluster ${cluster}</option>`;
+      return `<option value="${cluster}">Cluster ${
+        parseInt(cluster) + 1
+      }</option>`;
     });
 
     clusterSelect.innerHTML = clusterOptions.join("");
