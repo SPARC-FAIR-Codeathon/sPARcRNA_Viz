@@ -31,6 +31,7 @@ function fetchData() {
     Promise.resolve(tsne_data_json),
     Promise.resolve(cluster_info_json),
     Promise.resolve(gsea_results_json),
+    Promise.resolve(top10_markers_json),
   ]);
 }
 
@@ -147,27 +148,21 @@ function drawDataPoints(svg, data, X, Y) {
       .attr("stroke-width", 0.5);
 
     circle.on("mouseover", () => {
-      // Gray out all points
-      d3.selectAll(`.data-point:not(.cluster-${point.cluster})`)
-        .transition()
-        .attr("fill", "ghostwhite");
       // Highlight the selected cluster
       d3.selectAll(`.cluster-${point.cluster}`)
-        .transition()
-        .attr("fill", BASE_COLORS[parseInt(point.cluster)])
-        .attr("r", radius + 2);
+      .attr("r", radius + 2);
     });
 
     circle.on("click", () => {
       generateClusterInfo(point);
+
+      const clusterSelect = document.getElementById("top10-markers-select");
+
+      clusterSelect.value = point.cluster;
     });
 
     circle.on("mouseout", () => {
-      // Reset the color and size of all points
-      for (let i = 0; i < NUMBER_OF_CLUSTERS; i++) {
-        d3.selectAll(`.cluster-${i}`).attr("fill", BASE_COLORS[i]);
-      }
-      d3.selectAll(`.cluster-${point.cluster}`).attr("r", radius);
+      d3.selectAll(`.data-point`).attr("r", radius);
     });
   });
 }
@@ -216,6 +211,110 @@ function drawSVG(data, clusterInfo) {
   drawCentroids(svg, clusterInfo, scales.X, scales.Y);
 }
 
+function drawTop10MarkersHeatmap(data) {
+  const container = document.getElementById("top10-markers-heatmap");
+
+  if (!container) {
+    throw new Error("top10-markers-heatmap element not found");
+  }
+
+  const clusters = [...new Set(data.map((d) => d.cluster))];
+  const genes = [...new Set(data.map((d) => d.gene))];
+
+  // Check which genes appear in more than one cluster
+  const geneCounts = genes.reduce((acc, gene) => {
+    acc[gene] = data.filter((d) => d.gene === gene).length;
+    return acc;
+  }, {});
+
+  const filteredGenes = genes.filter((gene) => geneCounts[gene] > 1);
+
+  // Create a 2D array to store the avg_logFC values for each gene in each cluster
+  const reshapedData = [];
+
+  for (let i = 0; i < clusters.length; i++) {
+    reshapedData.push({
+      name: `Cluster ${i}`,
+      data: [],
+    });
+  }
+
+  for (let i = 0; i < filteredGenes.length; i++) {
+    const gene = filteredGenes[i];
+    const geneData = data.filter((d) => d.gene === gene);
+
+    for (let j = 0; j < clusters.length; j++) {
+      const clusterData = geneData.filter((d) => d.cluster === clusters[j]);
+      const avgLogFC = d3.mean(clusterData, (d) => d.avg_log2FC);
+      reshapedData[j].data.push(avgLogFC || 0.0);
+    }
+  }
+
+  const options = {
+    series: reshapedData,
+    chart: {
+      type: "heatmap",
+      height: 350,
+    },
+    xaxis: {
+      categories: filteredGenes,
+    },
+  };
+
+  var chart = new ApexCharts(container, options);
+  chart.render();
+}
+
+function drawTop10Markers(data) {
+  const container = document.getElementById("top10-markers");
+  if (!container) {
+    throw new Error("top10-markers element not found");
+  }
+
+  drawTop10MarkersHeatmap(data);
+}
+
+function drawTop10AverageExpression(cluster) {
+  const data = top10_markers_json;
+
+  const filteredData = data.filter((d) => d.cluster === cluster);
+
+  const container = document.getElementById("top10-markers-avg-expression");
+
+  if (!container) {
+    throw new Error("top10-markers-avg-expression element not found");
+  }
+
+  container.innerHTML = "";
+
+  const options = {
+    series: [
+      {
+        name: "avg_logFC",
+        data: filteredData.map((d) => d.avg_log2FC),
+      },
+    ],
+    chart: {
+      type: "bar",
+      height: 350,
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 4,
+        borderRadiusApplication: "end",
+        horizontal: true,
+      },
+    },
+    xaxis: {
+      categories: filteredData.map((d) => d.gene),
+      name: "avg_logFC",
+    },
+  };
+
+  var chart = new ApexCharts(container, options);
+  chart.render();
+}
+
 // Main execution function
 async function main() {
   try {
@@ -227,6 +326,21 @@ async function main() {
     NUMBER_OF_CLUSTERS = Object.keys(clusterInfo).length;
 
     drawSVG(tsneData, clusterInfo);
+
+    const clusterSelect = document.getElementById("top10-markers-select");
+
+    const clusterOptions = Object.keys(clusterInfo).map((cluster) => {
+      return `<option value="${cluster}">Cluster ${cluster}</option>`;
+    });
+
+    clusterSelect.innerHTML = clusterOptions.join("");
+    clusterSelect.addEventListener("change", (e) => {
+      const cluster = e.target.value;
+      drawTop10AverageExpression(cluster);
+    });
+
+    drawTop10Markers(top10_markers_json);
+    drawTop10AverageExpression("0");
     console.log("Visualization completed successfully");
   } catch (error) {
     console.error("An error occurred in main execution:", error);
