@@ -116,7 +116,7 @@ sPARcRNA_Viz offers a variety of command options:
 | `--gsea_max_size` | Maximum gene set size for GSEA | `500` |
 | `--category` | MSigDB category for GSEA | `"H"` |
 ## Tutorial
-The [scRNA-seq data]() used in the tutorial is from the SPARC Portal.
+The [scRNA-seq data](https://sparc.science/datasets/220?type=dataset&datasetDetailsTab=files&path=files/derivative) used in the tutorial is from the SPARC Portal.
 ### 1. Log in to [o²S²PARC](https://osparc.io/)
 <img width="500" alt="Screenshot 2024-08-12 at 9 36 07 PM" src="https://github.com/user-attachments/assets/5e295cbc-184a-42e9-b85b-8ad82bcc57a0">
 
