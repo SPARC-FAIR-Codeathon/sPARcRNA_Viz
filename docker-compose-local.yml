@@ -1,0 +1,10 @@
+services:
+  osparc_dex_service:
+    platform: linux/amd64
+    image: simcore/services/comp/osparc_dex_service:0.1.0
+    environment:
+      - INPUT_FOLDER=/tmp/inputs
+      - OUTPUT_FOLDER=/tmp/outputs
+    volumes:
+      - ${PWD}/validation/input:/tmp/inputs
+      - ${PWD}/validation/output:/tmp/outputs
