@@ -90,7 +90,7 @@ The gene expression data in SPARC is somewhat limited and is in a raw data forma
 
 ## Our Solution: sPARcRNA_Viz
 
-To address this challenge, we present **sPARcRNA_Viz**, an scRNA-seq visualization tool for potential entry alongside Transcriptomic_oSPARC. In incorporating flexible parameters, interactivity, and an additional DEA metric, sPARcRNA_Viz will complement Transcriptomic_oSPARC as part of a growing SPARC gene expression toolkit.
+To address this challenge, we present **sPARcRNA_Viz**, an scRNA-seq visualization tool for potential entry alongside Transcriptomic_oSPARC. In incorporating flexible parameters, interactivity, and an additional DEA metric, sPARcRNA_Viz will complement Transcriptomic_oSPARC as part of a growing SPARC gene expression toolkit. This was Codeathon team's first-ever attempt at putting this together.
 
 # Using sPARcRNA_Viz
 
