@@ -355,15 +355,18 @@ async function main() {
     });
 
     const modeSwitch = document.getElementById("mode-select");
+    const modeSpan = document.getElementById("mode-span");
 
     modeSwitch.addEventListener("change", (e) => {
       mode = e.target.value;
       if (mode === "tsne") {
+        modeSpan.innerHTML = "t-SNE";
         document.getElementById("top10-markers").style.display = "block";
 
         drawTop10Markers(top10_markers_json);
         drawTop10AverageExpression("0");
       } else {
+        modeSpan.innerHTML = "UMAP";
         document.getElementById("top10-markers").style.display = "none";
       }
     });
