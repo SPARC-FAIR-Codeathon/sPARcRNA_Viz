@@ -169,7 +169,7 @@ Please utilize the **Issues** tab of this repository should you encounter any pr
 ## How to Contribute
 Please Fork this repository and submit a **Pull Request** to contribute.
 ## Cite Us
-
+Please see our [citation](CITATION.cff).
 ## License
 sPARcRNA_Viz is distributed under the [MIT License](LICENSE).
 ## Team
