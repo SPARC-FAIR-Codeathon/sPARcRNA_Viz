@@ -1,0 +1,18 @@
+services:
+  rstudio:
+    image: rocker/rstudio:4.2.0
+    container_name: rstudio_instance
+    environment:
+      - PASSWORD=yourpassword
+      - USER=scu
+      - INPUT_FOLDER=/input
+      - OUTPUT_FOLDER=/output
+    volumes:
+      - ./src/pipeline:/home/scu/pipeline
+      - ./src/astro:/home/scu/astro
+      - ./input:/input
+      - ./output:/output
+    ports:
+      - "8787:8787"
+    user: "root"
+    command: ["--server-user", "scu"]

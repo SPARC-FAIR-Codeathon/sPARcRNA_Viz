@@ -8,6 +8,7 @@ library(fgsea)
 library(msigdbr)
 library(ggplot2)
 library(optparse)
+library(gficf)
 
 # Function to save data as both JSON and CSV
 save_data <- function(data,
@@ -278,207 +279,187 @@ ggsave(
   dpi = 300
 )
 
-# Export t-SNE coordinates and cluster information
-print("Exporting t-SNE coordinates and cluster information...")
-tsne_data <- data.frame(
-  cell_id = colnames(seurat_object),
-  cluster = Idents(seurat_object),
-  tSNE_1 = Embeddings(seurat_object, reduction = "tsne")[, 1],
-  tSNE_2 = Embeddings(seurat_object, reduction = "tsne")[, 2]
+
+#' All credit for this function goes to the gambalab/seurat-wrappers github repository
+#' This is a PR to satijalab/seurat-wrappers repository
+#' 
+#' See biorxiv preprint: https://www.biorxiv.org/content/10.1101/2022.10.24.513476v1
+#' See code: https://github.com/satijalab/seurat-wrappers/pull/147
+#' 
+#' Run Single cell Gene Set Enrichement Analysis on GF-ICF on a Seurat object
+#'
+#' This function run runScGSEA function from GF-ICF package on Seurat object. 
+#' It computes GSEA for each cells across a set of input pathways by using NMF.
+#'
+#' @param object Seurat object
+#' @param assay Assay to use, defaults to the default assay
+#' @param filterGenes Rank of NMF to use for the enrichment
+#' @param nmf.dim Rank of NMF to use for the enrichment
+#' @param geneID The type of gene names in rownames of \code{object}. It can be either 'ensamble' or 'symbol'. Default: 'ensamble'
+#' @param species The type of species in \code{object}. It can be either 'mouse' or 'human'. Default: 'human'
+#' @param category MSigDB collection abbreviation, such as H or C1
+#' @param subcategory MSigDB sub-collection abbreviation, such as CGP or BP
+#' @param rescale If different by none, pathway's activity scores are resealed as Z-score. Possible values are none, byGS or byCell. Default is none
+#'
+#' @return returns a Seurat object with pathways x cell matrix 
+#' @export
+
+RunScGSEA <- function(
+    object,
+    assay = NULL,
+    filterGenes = TRUE,
+    nmf.dim = 100,
+    geneID = c("ensamble","symbol"),
+    species = c("mouse", "human"),
+    category = "H",
+    subcategory = NULL,
+    verbose = F) {
+  
+  # Store Seurat metadata in separate variable to enable working on different assay types. (i.e. SCT assay does not have metadata slot as it refers to RNA assay)  
+  meta.data = object@meta.data
+  
+  SeuratWrappers:::CheckPackage(package = 'gambalab/gficf', repository = 'github')
+  assay <- assay %||% SeuratObject::DefaultAssay(object = object)
+  
+  # Get raw count matrix from Seurat object from the assay slot defined by the user
+  M <- SeuratObject::GetAssayData(object = object, slot = "counts")
+  # Data normalization and gene filtering
+  M <- gficf::gficf(M = M, filterGenes = filterGenes)
+  # Create NMF-subspace 
+  M <- gficf::runNMF(data = M, dim = nmf.dim)
+  # Create t-UMAP space
+  M <- gficf::runReduction(data = M, reduction = "umap", verbose = verbose)
+  # Compute GSEA for each cells across a set of input pathways by using NMF
+  M <- gficf::runScGSEA(data = M,
+                        geneID = geneID,
+                        species = species,
+                        category = category,
+                        subcategory = subcategory,
+                        nmf.k = nmf.dim,
+                        fdr.th = .1,
+                        rescale = 'none',
+                        verbose = verbose)
+  
+  # Add cell names to enrichment results
+  raw_enrich <- t(M$scgsea$x)
+  colnames(raw_enrich) <- colnames(object)
+  # Normalize enrichment results by computing pathway's activity z-scores
+  norm_enrich <- Matrix::Matrix((raw_enrich - Matrix::rowMeans(raw_enrich)) / apply(raw_enrich, 1, sd), sparse=T)
+  # Create a new Seurat object containing the raw pathway x cell matrix in counts slot and preserving meta data (adding _byGenes tag only if clusters were already computed)
+  if('seurat_clusters' %in% colnames(meta.data)) {
+    colnames(meta.data) <- gsub('seurat_clusters', 'seurat_clusters_byGenes', colnames(meta.data))
+  }
+  path_obj <- CreateSeuratObject(counts = raw_enrich, meta.data = meta.data, assay = 'pathway')
+  # And the z-score-normalized one in data and scale.data slots
+  path_obj <- SetAssayData(object = path_obj, slot = 'data', new.data = norm_enrich)
+  path_obj <- SetAssayData(object = path_obj, slot = 'scale.data', new.data = as.matrix(norm_enrich))
+  # Store metadata of pathways retained after significance filtering
+  feat.meta <- M$scgsea$stat[M$scgsea$stat$pathway%in%colnames(M$scgsea$x), ] 
+  feat.meta <- data.frame(feat.meta, row.names = 1)
+  feat.meta$genes <- do.call(c, lapply(M$scgsea$pathways[rownames(feat.meta)], function(x) paste(x, collapse = ',')))
+  path_obj[['pathway']]@meta.features <- feat.meta
+  
+  # Store dimensionality reduction results computed on genes x cells matrix
+  path_obj@reductions <- object@reductions
+  names(path_obj@reductions) <- paste0(names(path_obj@reductions), '_byGenes')
+  
+  return(path_obj)
+}
+
+# Integrate scGSEA steps
+print("Running scGSEA...")
+seurat_object_gsea <- RunScGSEA(
+  object = seurat_object,
+  geneID = "symbol",
+  species = opt$species,
+  category = opt$category
 )
 
-tsne_files <- save_data(tsne_data, "tsne_data", opt$output)
+# Visualize UMAP plot computed on pathways activity scores
+print("Computing UMAP on pathway activity scores...")
+seurat_object_gsea <- RunPCA(seurat_object_gsea, features = rownames(seurat_object_gsea))
+seurat_object_gsea <- RunUMAP(seurat_object_gsea, dims = 1:10)
 
-# Perform differential expression analysis
-print("Performing differential expression analysis...")
-markers <- FindAllMarkers(
-  seurat_object,
-  only.pos = TRUE,
-  min.pct = opt$min_pct,
-  logfc.threshold = opt$logfc_threshold
+# Run t-SNE on pathway activity scores
+print("Running t-SNE on pathway activity scores...")
+seurat_object_gsea <- RunTSNE(seurat_object_gsea, dims = 1:10)
+
+# Cluster cells based on pathways activity scores
+print("Clustering cells based on pathway activity scores...")
+seurat_object_gsea <- FindNeighbors(seurat_object_gsea, dims = 1:10)
+seurat_object_gsea <- FindClusters(seurat_object_gsea, resolution = opt$resolution)
+
+# Export UMAP and t-SNE coordinates and cluster information for both gene expression and pathway activity
+print("Exporting UMAP and t-SNE coordinates and cluster information...")
+dim_reduction_data <- data.frame(
+  cell_id = colnames(seurat_object_gsea),
+  cluster_genes = Idents(seurat_object),
+  cluster_pathways = Idents(seurat_object_gsea),
+  UMAP_1_genes = Embeddings(seurat_object, reduction = "umap")[, 1],
+  UMAP_2_genes = Embeddings(seurat_object, reduction = "umap")[, 2],
+  UMAP_1_pathways = Embeddings(seurat_object_gsea, reduction = "umap")[, 1],
+  UMAP_2_pathways = Embeddings(seurat_object_gsea, reduction = "umap")[, 2],
+  tSNE_1_genes = Embeddings(seurat_object, reduction = "tsne")[, 1],
+  tSNE_2_genes = Embeddings(seurat_object, reduction = "tsne")[, 2],
+  tSNE_1_pathways = Embeddings(seurat_object_gsea, reduction = "tsne")[, 1],
+  tSNE_2_pathways = Embeddings(seurat_object_gsea, reduction = "tsne")[, 2]
 )
-top10 <- markers %>% group_by(cluster) %>% top_n(n = 10, wt = avg_log2FC)
 
-# Export top 10 markers
-top10_files <- save_data(top10, "top10_markers", opt$output)
+dim_reduction_files <- save_data(dim_reduction_data, "dim_reduction_data", opt$output)
 
-# Perform GSEA
-print("Performing GSEA...")
-# Get gene sets
-m_df <- msigdbr(species = opt$species, category = opt$category)
-fgsea_sets <- m_df %>% split(x = .$gene_symbol, f = .$gs_name)
-
-# Function to perform GSEA for a single cluster
-perform_gsea <- function(cluster) {
-  cluster_markers <- markers %>% filter(cluster == !!cluster) %>% arrange(desc(avg_log2FC))
-  stats <- setNames(cluster_markers$avg_log2FC, cluster_markers$gene)
-  fgsea_result <- fgsea(
-    pathways = fgsea_sets,
-    stats = stats,
-    minSize = opt$gsea_min_size,
-    maxSize = opt$gsea_max_size,
-    scoreType = "pos",
-    nPermSimple = 10000
+# Calculate cluster centroids for gene expression-based clustering (UMAP and t-SNE)
+print("Calculating cluster centroids for gene expression-based clustering...")
+gene_cluster_centroids <- dim_reduction_data %>%
+  group_by(cluster_genes) %>%
+  summarise(
+    umap_centroid_x_genes = mean(UMAP_1_genes),
+    umap_centroid_y_genes = mean(UMAP_2_genes),
+    tsne_centroid_x_genes = mean(tSNE_1_genes),
+    tsne_centroid_y_genes = mean(tSNE_2_genes)
   )
-  fgsea_result$cluster <- cluster
-  return(fgsea_result)
-}
 
-# Perform GSEA for each cluster
-gsea_results <- lapply(unique(markers$cluster), perform_gsea)
-gsea_results <- do.call(rbind, gsea_results)
+# Calculate cluster centroids for pathway activity-based clustering (UMAP and t-SNE)
+print("Calculating cluster centroids for pathway activity-based clustering...")
+pathway_cluster_centroids <- dim_reduction_data %>%
+  group_by(cluster_pathways) %>%
+  summarise(
+    umap_centroid_x_pathways = mean(UMAP_1_pathways),
+    umap_centroid_y_pathways = mean(UMAP_2_pathways),
+    tsne_centroid_x_pathways = mean(tSNE_1_pathways),
+    tsne_centroid_y_pathways = mean(tSNE_2_pathways)
+  )
 
-# Export GSEA results
-gsea_files <- save_data(gsea_results, "gsea_results", opt$output)
+# Export pathway activity scores
+print("Exporting pathway activity scores...")
+pathway_scores <- GetAssayData(seurat_object_gsea, slot = "data")
+pathway_scores_df <- as.data.frame(t(as.matrix(pathway_scores)))
+pathway_scores_df$cell_id <- rownames(pathway_scores_df)
+pathway_scores_files <- save_data(pathway_scores_df, "pathway_scores", opt$output)
 
-# Save top pathways for each cluster as JSON
-gsea_cluster_results <- list()
-
-for (cluster in unique(gsea_results$cluster)) {
-  cluster_results <- gsea_results %>%
-    # Filter all results to the current cluster
-    filter(cluster == !!cluster) %>%
-    # Sort by p-value
-    arrange(pval) %>%
-    # Select top 20 pathways
-    head(20) %>%
-    # Select specific columns
-    select(pathway, NES, pval, padj, size) %>%
-    # Round numeric values for compression/readability
-    mutate(across(where(is.numeric), round, digits = 5))  # Round numeric values for readability
-
-  # Set the cluster results in the list
-  gsea_cluster_results[[as.character(cluster)]] <- cluster_results
-}
-
-# Save all cluster results to a single JSON file
-save_data(gsea_cluster_results,
-          "gsea_cluster_results",
-          opt$output,
-          csv = FALSE)
-print("Integrating t-SNE and GSEA results...")
-
-# Get top pathways for each cluster
-# The GSEA results provide pathways enriched in different clusters.
-# This step filters the top 5 pathways with the lowest p-values for each cluster.
-top_pathways <- gsea_results %>%
-  group_by(cluster) %>%
-  top_n(n = 5, wt = -pval) %>%
-  summarise(top_pathways = list(pathway))
-
-# Create a data frame with t-SNE coordinates and cluster information
-# Here, we prepare a data frame that includes essential cell metadata.
-# This data includes the cell ID, cluster assignment, and t-SNE coordinates,
-# which are crucial for visualizing the spatial organization of cells.
-# Including this data helps in correlating gene expression with cellular identity and spatial distribution.
-integrated_data <- data.frame(
-  cell_id = colnames(seurat_object),
-  cluster = Idents(seurat_object),
-  tSNE_1 = Embeddings(seurat_object, reduction = "tsne")[, 1],
-  tSNE_2 = Embeddings(seurat_object, reduction = "tsne")[, 2]
+# Identify top pathways for each cluster
+print("Identifying top pathways for each cluster...")
+Idents(seurat_object_gsea) <- seurat_object_gsea$seurat_clusters
+top_pathways <- FindAllMarkers(
+  seurat_object_gsea,
+  only.pos = TRUE,
+  min.pct = 0.25,
+  logfc.threshold = 0.25
 )
-
-# Add top pathways for each cluster
-# This step merges the top pathways data with the t-SNE coordinates and cluster information.
-# By integrating pathway data, it becomes possible to map enriched pathways to their respective clusters,
-# allowing for a more comprehensive understanding of the biological processes at play within each cluster.
-integrated_data <- integrated_data %>%
-  left_join(top_pathways, by = "cluster") %>%
-  # Ensure 'cluster' is the first column
-  select(cluster, everything())
-
-
-# Calculate cluster centroids
-# Here, the centroids of each cluster in the t-SNE space are calculated.
-# The centroid represents the average position of all cells within a cluster,
-# and can be used as a reference point for cluster location in visualizations.
-# This step is important for summarizing the spatial distribution of clusters.
-cluster_centroids <- integrated_data %>%
+top_pathways_per_cluster <- top_pathways %>%
   group_by(cluster) %>%
-  summarise(centroid_x = mean(tSNE_1),
-            centroid_y = mean(tSNE_2))
+  top_n(n = 5, wt = avg_log2FC) %>%
+  summarise(top_pathways = list(gene))
 
-# Add centroids and top pathways to the cluster information
-# The cluster centroids and top pathways are combined to create a final summary of each cluster.
-# This data will be useful for visualizations and downstream analyses that require cluster-level information.
-# By including both spatial and functional data (pathways), this step ensures that the cluster summaries are comprehensive.
-cluster_info <- cluster_centroids %>%
-  left_join(top_pathways, by = "cluster") %>%
-  select(cluster, everything())
+# Combine cluster centroids with top pathways
+cluster_info_genes <- gene_cluster_centroids %>%
+  left_join(top_pathways_per_cluster, by = c("cluster_genes" = "cluster"))
 
-# Save integrated data
-integrated_files <- save_data(integrated_data, "integrated_tsne_gsea", opt$output)
+cluster_info_pathways <- pathway_cluster_centroids %>%
+  left_join(top_pathways_per_cluster, by = c("cluster_pathways" = "cluster"))
 
 # Save cluster info
-cluster_info_files <- save_data(cluster_info, "cluster_info", opt$output)
-
-print("Integrating cell IDs with gene expression data...")
-
-# Get normalized gene expression data
-# This retrieves the normalized gene expression matrix from the Seurat object.
-# The normalization step is crucial to ensure that differences in gene expression
-# are not due to technical biases but reflect true biological variation.
-gene_expression <- GetAssayData(seurat_object, slot = "data")
-
-# Select top variable genes to reduce data size
-# Here, the most variable genes are selected from the dataset.
-# Focusing on these genes reduces the data size, making downstream analysis
-# more computationally efficient while retaining the most informative features.
-top_genes <- VariableFeatures(seurat_object)
-gene_expression <- gene_expression[top_genes, ]
-
-# Create a summary of average gene expression per cluster
-# This step summarizes gene expression by calculating the average expression
-# of each gene across all cells within the same cluster.
-# Such summaries are valuable for identifying cluster-specific gene expression patterns,
-# which can highlight key biological processes or marker genes for each cluster.
-metadata <- data.frame(
-  cell_id = colnames(seurat_object),
-  cluster = Idents(seurat_object),
-  tSNE_1 = Embeddings(seurat_object, reduction = "tsne")[, 1],
-  tSNE_2 = Embeddings(seurat_object, reduction = "tsne")[, 2]
-)
-
-# Create gene expression dataframe and filter out zeros
-gene_data <- as.data.frame(t(as.matrix(gene_expression)))
-gene_data_filtered <- lapply(1:nrow(gene_data), function(i) {
-  cell_data <- gene_data[i, ]
-  non_zero <- cell_data[cell_data != 0]
-  if (length(non_zero) > 0) {
-    return(as.list(non_zero))
-  } else {
-    return(NULL)
-  }
-})
-
-# Remove NULL entries (cells with no non-zero gene expression)
-gene_data_filtered <- gene_data_filtered[!sapply(gene_data_filtered, is.null)]
-
-# Combine metadata and filtered gene expression data
-cell_gene_data <- list(metadata = metadata, gene_expression = gene_data_filtered)
-
-# Save cell-gene data
-cell_gene_files <- save_data(cell_gene_data, "cell_gene_data", opt$output)
-
-# Create a summary of average gene expression per cluster
-cluster_avg_expression <- gene_expression %>%
-  as.data.frame() %>%
-  t() %>%
-  as.data.frame() %>%
-  mutate(cluster = Idents(seurat_object)) %>%
-  group_by(cluster) %>%
-  summarise(across(everything(), mean))
-
-# Ensure 'cluster' is the first column
-cluster_avg_expression <- cluster_avg_expression %>%
-  select(cluster, everything())
-
-# Save cluster average expression data
-cluster_avg_files <- save_data(cluster_avg_expression, "cluster_avg_expression", opt$output)
-
-# Save the Seurat object
-print("Saving Seurat object...")
-saveRDS(seurat_object, file = file.path(opt$output, paste0(opt$prefix, "seurat_object.rds")))
+cluster_info_files_genes <- save_data(cluster_info_genes, "cluster_info_genes", opt$output)
+cluster_info_files_pathways <- save_data(cluster_info_pathways, "cluster_info_pathways", opt$output)
 
 # Create and save outputs.json
 outputs <- list(
@@ -487,15 +468,12 @@ outputs <- list(
   final_cell_count = ncol(seurat_object),
   gene_count = nrow(seurat_object),
   project_name = opt$name,
-  cluster_count = length(unique(Idents(seurat_object))),
-  tsne_plot = "tsne_plot.png",
-  tsne_data_csv = tsne_files$csv,
-  top_markers_csv = top10_files$csv,
-  gsea_results_csv = gsea_files$csv,
-  integrated_tsne_gsea_csv = integrated_files$csv,
-  cluster_info_csv = cluster_info_files$csv,
-  cell_gene_data_csv = cell_gene_files$csv,
-  cluster_avg_expression_csv = cluster_avg_files$csv
+  cluster_count_genes = length(unique(Idents(seurat_object))),
+  cluster_count_pathways = length(unique(Idents(seurat_object_gsea))),
+  dim_reduction_data_csv = dim_reduction_files$csv,
+  pathway_scores_csv = pathway_scores_files$csv,
+  cluster_info_genes_csv = cluster_info_files_genes$csv,
+  cluster_info_pathways_csv = cluster_info_files_pathways$csv
 )
 write_json(outputs, file.path(opt$output, "outputs.json"))
 
