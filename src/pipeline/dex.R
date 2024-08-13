@@ -165,13 +165,13 @@ default_options <- list(
   logfc_threshold = 0.25,
   gsea_min_size = 15,
   gsea_max_size = 500,
-  category = "H"
+  category = "C5"
 )
 
 # Parse command line arguments
 opt_parser <- OptionParser(option_list = option_list)
-# opt <- parse_args(opt_parser)
-opt <- default_options
+opt <- parse_args(opt_parser)
+# opt <- default_options
 
 # Validate input and output directories
 if (is.null(opt$input) || is.null(opt$output)) {

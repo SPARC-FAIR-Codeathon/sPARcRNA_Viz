@@ -4,7 +4,7 @@ import sys
 import os
 
 if __name__ == '__main__':
-    if len(sys.argv) == 3:
+    if not len(sys.argv) == 3:
         print('Usage: json_convert.py <input_folder> <output_folder>')
         sys.exit(1)
         
