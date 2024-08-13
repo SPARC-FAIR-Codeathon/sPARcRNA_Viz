@@ -53,12 +53,11 @@ if [ ! -f "${OUTPUT_FOLDER}/outputs.json" ]; then
     exit 1
 fi
 
-cp -r astro/ ./
-yarn build
-cp build/* "${OUTPUT_FOLDER}/"
+python3 /home/${SC_USER_NAME}/json_convert.py "$INPUT_FOLDER" static/
+cp -R static/ "$OUTPUT_FOLDER"
 
 # Zip all output files
-zip -r outputs.zip "${OUTPUT_FOLDER}"/*.csv "${OUTPUT_FOLDER}"/*.png "${OUTPUT_FOLDER}"/*.rds "${OUTPUT_FOLDER}"/outputs.json
+zip -r outputs.zip "${OUTPUT_FOLDER}"/
 
 # Move the zip file to be the only output
 mv outputs.zip "${OUTPUT_FOLDER}/final_output.zip"
