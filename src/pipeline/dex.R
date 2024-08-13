@@ -171,8 +171,8 @@ default_options <- list(
 
 # Parse command line arguments
 opt_parser <- OptionParser(option_list = option_list)
-# opt <- parse_args(opt_parser)
-opt <- default_options
+opt <- parse_args(opt_parser)
+# opt <- default_options
 
 # Validate input and output directories
 if (is.null(opt$input) || is.null(opt$output)) {
@@ -303,7 +303,6 @@ ggsave(
 #'
 #' @return returns a Seurat object with pathways x cell matrix 
 #' @export
-
 RunScGSEA <- function(
     object,
     assay = NULL,
@@ -372,7 +371,7 @@ seurat_object_gsea <- RunScGSEA(
   object = seurat_object,
   geneID = "symbol",
   species = opt$species,
-  category = opt$category
+  category = opt$category,
 )
 
 # Visualize UMAP plot computed on pathways activity scores
