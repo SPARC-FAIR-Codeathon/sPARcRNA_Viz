@@ -148,8 +148,28 @@ sPARcRNA_Viz offers a variety of `make` options:
 | `--gsea_max_size` | Maximum gene set size for GSEA | `500` |
 | `--category` | MSigDB category for GSEA | `"H"` |
 ## Tutorial
-- Maybe some kind of tutorial if applicable and we have extra time
-- This could possibly consist of sample inputs
+The scRNA-seq data used in the tutorial is from the SPARC Portal.
+### 1. Log in to osparc
+<img width="500" alt="Screenshot 2024-08-12 at 9 36 07 PM" src="https://github.com/user-attachments/assets/5e295cbc-184a-42e9-b85b-8ad82bcc57a0">
+
+### 2. Open new study
+<img width="201" alt="Screenshot 2024-08-12 at 9 35 10 PM" src="https://github.com/user-attachments/assets/ced50573-fbf9-458f-8912-29374ad3c26f">
+
+### 3. Add 3 file nodes and upload the 10x genomics data
+<img width="500" alt="Screenshot 2024-08-12 at 8 52 18 PM" src="https://github.com/user-attachments/assets/c565355d-8e57-43a1-aade-d653be2d2853">
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/c992bcbb-c061-46f0-a611-28753686e0ed">
+<img width="500" alt="Screenshot 2024-08-12 at 9 34 49 PM" src="https://github.com/user-attachments/assets/0925c0d3-e128-4bb8-992b-62288973f005">
+<br></br>
+(Alternatively, drag and drop the needed files into the workspace.)
+
+### 4. Add sPARcRNA_Viz node
+<img width="500" alt="Screenshot 2024-08-12 at 9 33 34 PM" src="https://github.com/user-attachments/assets/43b92fb3-44e4-42ea-ada2-bbf2bc866528">
+
+### 5. Connect the nodes
+<img width="500" alt="Screenshot 2024-08-12 at 9 34 08 PM" src="https://github.com/user-attachments/assets/f49395fe-d51b-4ec1-88f9-b4eae37ce0a9">
+
+### 6. Optional run outputs through JupyterLab R for further analysis
+<img width="500" alt="Screenshot 2024-08-12 at 9 21 20 PM" src="https://github.com/user-attachments/assets/8c8b0833-90eb-4fea-af5e-13e2947b7d33">
 ## Future Vision
 sPARcRNA_Viz would be expanded to include other interactive visualizations and API calls to other gene databases. This would provide more ways to analyze genes and integrate with other websites.
 
