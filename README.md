@@ -139,9 +139,9 @@ Particularly in the case of scRNA-seq data, which is expensive from both a wet a
 ### Summary of FAIR Principles Application
 | FAIR Principle | Other Tools | sPARcRNA_Viz |
 | --- | --- | --- |
-| **F**indable | May not be connected to an existing database such as the SPARC Portal, which could hinder the findability of data | sPARcRNA_Viz is connected to o²S²PARC, so it can use the well-organized datasets provided on the SPARC portal |
-| **A**ccessible | May have a user interface that requires a programming background | sPARcRNA_Viz's friendly user interface and visuals allow researchers to quickly engage with data |
-| **I**nteroperable | May not allow for connections between datasets | Through its use of GSEA, sPARcRNA_Viz allows for the meaningful connection of datasets: scRNA-seq data can be used in association with gene ontology. In addition |
+| **F**indable | May not be connected to an existing database such as the SPARC Portal, which could hinder the findability of data | sPARcRNA_Viz is connected to o²S²PARC, so it can use the well-organized datasets provided on the SPARC portal, and it is archived on Zenodo with the appropriate metadata |
+| **A**ccessible | May have a user interface that requires a programming background | sPARcRNA_Viz's friendly user interface and visuals allow researchers to quickly engage with data and is open, free and universally implementable |
+| **I**nteroperable | May not allow for connections between datasets | Through its use of GSEA, sPARcRNA_Viz allows for the meaningful connection of datasets: scRNA-seq data can be used in association with gene ontology. In addition, visualizations generated for each dataset can be compared with each other |
 | **R**eusable | May only support the formatting of one dataset | sPARcRNA_Viz be used with multiple datasets due to the ability to specify parameters. Likewise, sPARcRNA_Viz offers a security benefit through its use of input validation |
 
 Additional information surrounding these applications is detailed in the sPARcRNA_Viz FAIR Practices document found [here](#fair-practices).
