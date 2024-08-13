@@ -28,10 +28,10 @@ let mode = "tsne";
 // Fetch all required data
 function fetchData() {
   return Promise.all([
-    Promise.resolve(tsne_data_json),
-    Promise.resolve(cluster_info_json),
-    Promise.resolve(gsea_results_json),
-    Promise.resolve(top10_markers_json),
+    Promise.resolve(tsne_data),
+    Promise.resolve(cluster_info),
+    Promise.resolve(gsea_results),
+    Promise.resolve(top10_markers),
   ]);
 }
 
@@ -66,9 +66,7 @@ function createScales(data, width, height) {
 // Generate GSEA info panel content
 function generateGseaInfo(pathway) {
   const gseaPanel = document.getElementById("gsea-info-panel");
-  const gseaInfo = gsea_results_json.find(
-    (result) => result.pathway === pathway
-  );
+  const gseaInfo = gsea_results.find((result) => result.pathway === pathway);
 
   const content = `
     <div class="bg-white shadow-xl rounded-lg p-6">
@@ -97,7 +95,7 @@ function generateClusterInfo(point) {
   gseaPanelInfo.innerHTML = "";
 
   const clusterPanelInfo = document.getElementById("cluster-info-panel");
-  const clusterInfo = cluster_info_json[point.cluster][0];
+  const clusterInfo = cluster_info[point.cluster][0];
 
   const content = `
     <div class="bg-white shadow-md rounded-lg p-6">
@@ -277,7 +275,7 @@ function drawTop10Markers(data) {
 }
 
 function drawTop10AverageExpression(cluster) {
-  const data = top10_markers_json;
+  const data = top10_markers;
 
   const filteredData = data.filter((d) => d.cluster === cluster);
 
@@ -363,7 +361,7 @@ async function main() {
         modeSpan.innerHTML = "t-SNE";
         document.getElementById("top10-markers").style.display = "block";
 
-        drawTop10Markers(top10_markers_json);
+        drawTop10Markers(top10_markers);
         drawTop10AverageExpression("0");
       } else {
         modeSpan.innerHTML = "UMAP";
@@ -371,7 +369,7 @@ async function main() {
       }
     });
 
-    drawTop10Markers(top10_markers_json);
+    drawTop10Markers(top10_markers);
     drawTop10AverageExpression("0");
 
     console.log("Visualization completed successfully");
