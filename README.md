@@ -169,6 +169,7 @@ The scRNA-seq data used in the tutorial is from the SPARC Portal.
 
 ### 6. Optional run outputs through JupyterLab R for further analysis
 <img width="500" alt="Screenshot 2024-08-12 at 9 21 20 PM" src="https://github.com/user-attachments/assets/8c8b0833-90eb-4fea-af5e-13e2947b7d33">
+
 ## Future Vision
 sPARcRNA_Viz would be expanded to include other interactive visualizations and API calls to other gene databases. This would provide more ways to analyze genes and integrate with other websites.
 
