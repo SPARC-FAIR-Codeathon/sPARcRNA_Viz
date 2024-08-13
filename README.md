@@ -80,7 +80,7 @@ To address this challenge, we present **sPARcRNA_Viz**, an scRNA-seq visualizati
 ### Required Input Format
 sPARcRNA_Viz currently supports the following file format: **.csv/.tsv** (barcode and feature files), **.mtx** (matrix file) single-cell matrices along with R data. These formats and 3 files are required to run the analysis successfully.
 ## sPARcRNA_Viz Pipeline Workflow
-Can refer to [Pipeline Documentation](PIPELINE.md).
+Can refer to [PIPELINE.md](PIPELINE.md).
 ### 1. Setup
 Load libraries, set options, validate and prepare the directories; find and read raw data files; configure based on inputs.
 ### 2. Create Seurat object
@@ -158,20 +158,20 @@ Particularly in the case of scRNA-seq data, which is expensive from both a wet a
 ### Summary of FAIR Principles Application
 | FAIR Principle | Other Tools | sPARcRNA_Viz |
 | --- | --- | --- |
-| **F**indable | May not be connected to an existing database such as the SPARC Portal, which could hinder the findability of data | sPARcRNA_Viz is connected to o²S²PARC, so it can use the well-organized datasets provided on the SPARC portal, and it is archived on Zenodo with the appropriate metadata |
-| **A**ccessible | May have a user interface that requires a programming background | sPARcRNA_Viz's friendly user interface and visuals allow researchers to quickly engage with data and is open, free and universally implementable |
-| **I**nteroperable | May not allow for connections between datasets | Through its use of GSEA, sPARcRNA_Viz allows for the meaningful connection of datasets: scRNA-seq data can be used in association with gene ontology. In addition, visualizations generated for each dataset can be compared with each other |
-| **R**eusable | May only support the formatting of one dataset | sPARcRNA_Viz be used with multiple datasets due to the ability to specify parameters. Likewise, sPARcRNA_Viz offers a security benefit through its use of input validation |
+| **F**indable | May not be connected to an existing database such as the SPARC Portal, which could hinder the findability of data | sPARcRNA_Viz is **connected to o²S²PARC**, so it can use the well-organized datasets provided on the SPARC portal, and it is archived on Zenodo with the appropriate metadata |
+| **A**ccessible | May have a user interface that requires a programming background | sPARcRNA_Viz's **friendly user interface and visuals** allow researchers to quickly engage with data and is open, free and universally implementable |
+| **I**nteroperable | May not allow for connections between datasets | Through its use of GSEA, sPARcRNA_Viz allows for the **meaningful connection of datasets**: scRNA-seq data can be used in association with gene ontology. In addition, visualizations generated for each dataset can be compared with each other |
+| **R**eusable | May only support the formatting of one dataset | sPARcRNA_Viz be used with multiple datasets due to the ability to **specify parameters**. Likewise, sPARcRNA_Viz offers a security benefit through its use of **input validation** |
 
 # Additional Information
 ## Issue Reporting
 Please utilize the **Issues** tab of this repository should you encounter any problems with sPARcRNA_Viz.
 ## How to Contribute
-Fork this repository and submit a pull request to contribute.
+Please Fork this repository and submit a **Pull Request** to contribute.
 ## Cite Us
-- All of the winning projects included a citation
+
 ## License
-- sPARcRNA_Viz is distributed under the MIT License.
+sPARcRNA_Viz is distributed under the [MIT License](LICENSE).
 ## Team
 - Mihir Samdarshi (Lead, Sysadmin, Developer)
 - Sanjay Soundarajan (Sysadmin, Developer)
