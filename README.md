@@ -80,7 +80,7 @@ To address this challenge, we present **sPARcRNA_Viz**, an scRNA-seq visualizati
 ### Required Input Format
 sPARcRNA_Viz currently supports the following file format: **.csv/.tsv** (barcode and feature files), **.mtx** (matrix file) single-cell matrices along with R data. These formats and 3 files are required to run the analysis successfully.
 ## sPARcRNA_Viz Pipeline Workflow
-Can refer to [Pipeline Documentation](add link).
+Can refer to [Pipeline Documentation](PIPELINE.md).
 ### 1. Setup
 Load libraries, set options, validate and prepare the directories; find and read raw data files; configure based on inputs
 ### 2. Create Seurat object
