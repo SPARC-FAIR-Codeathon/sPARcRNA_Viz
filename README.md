@@ -84,9 +84,9 @@ Can refer to [Pipeline Documentation](PIPELINE.md).
 ### 1. Setup
 Load libraries, set options, validate and prepare the directories; find and read raw data files; configure based on inputs
 ### 2. Create Seurat object
-Seurat is an R package specially designed for the quality control (QC) , analysis, and exploration of single-cell RNA-seq data. Thus, it proved to be a suitable choice for the purposes of sPARcRNA_Viz.
+[Seurat](https://cran.r-project.org/web/packages/Seurat/index.html) is an R package specially designed for the quality control (QC) , analysis, and exploration of single-cell RNA-seq data. Thus, it proved to be a suitable choice for the purposes of sPARcRNA_Viz.
 ### 3. Normalize and preprocess the data
-Normalize (so that data reflects true biological differences); find variable features; scale (to standardize the data); perform PCA (Principal Component Analysis to reduce dimensionality); and cluster cells with similar profiles together
+Normalize (so that data reflects true biological differences); find variable features; scale (to standardize the data); perform PCA (Principal Component Analysis to reduce dimensionality); and cluster cells with similar profiles together.
 ### 4. t-SNE
 t-SNE allows us to visualize statistically significant genes based on these clusters. From these, researchers can determine potential gene ontologies arising from their sample(s).
 ### 5. Differential Gene Expression Analysis
