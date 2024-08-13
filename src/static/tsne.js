@@ -23,7 +23,7 @@ const BASE_COLORS = [
 const MARGIN = { bottom: 40, left: 40, right: 40, top: 40 };
 const HEIGHT = 1000 - MARGIN.top - MARGIN.bottom;
 
-let NUMBER_OF_CLUSTERS = 0;
+let mode = "tsne";
 
 // Fetch all required data
 function fetchData() {
@@ -149,8 +149,7 @@ function drawDataPoints(svg, data, X, Y) {
 
     circle.on("mouseover", () => {
       // Highlight the selected cluster
-      d3.selectAll(`.cluster-${point.cluster}`)
-      .attr("r", radius + 2);
+      d3.selectAll(`.cluster-${point.cluster}`).attr("r", radius + 2);
     });
 
     circle.on("click", () => {
@@ -258,6 +257,9 @@ function drawTop10MarkersHeatmap(data) {
     },
     xaxis: {
       categories: filteredGenes,
+      title: {
+        text: "Gene",
+      },
     },
   };
 
@@ -297,6 +299,7 @@ function drawTop10AverageExpression(cluster) {
     chart: {
       type: "bar",
       height: 350,
+      width: 600,
     },
     plotOptions: {
       bar: {
@@ -307,7 +310,19 @@ function drawTop10AverageExpression(cluster) {
     },
     xaxis: {
       categories: filteredData.map((d) => d.gene),
-      name: "avg_logFC",
+      title: {
+        text: "avg_logFC",
+      },
+    },
+    yaxis: {
+      title: {
+        text: "Gene",
+      },
+    },
+    title: {
+      text: "Average expression of top marker genes in cluster",
+      align: "left",
+      size: 10,
     },
   };
 
@@ -323,8 +338,6 @@ async function main() {
       throw new Error("No data received or empty data set");
     }
 
-    NUMBER_OF_CLUSTERS = Object.keys(clusterInfo).length;
-
     drawSVG(tsneData, clusterInfo);
 
     const clusterSelect = document.getElementById("top10-markers-select");
@@ -339,8 +352,23 @@ async function main() {
       drawTop10AverageExpression(cluster);
     });
 
+    const modeSwitch = document.getElementById("mode-select");
+
+    modeSwitch.addEventListener("change", (e) => {
+      mode = e.target.value;
+      if (mode === "tsne") {
+        document.getElementById("top10-markers").style.display = "block";
+
+        drawTop10Markers(top10_markers_json);
+        drawTop10AverageExpression("0");
+      } else {
+        document.getElementById("top10-markers").style.display = "none";
+      }
+    });
+
     drawTop10Markers(top10_markers_json);
     drawTop10AverageExpression("0");
+
     console.log("Visualization completed successfully");
   } catch (error) {
     console.error("An error occurred in main execution:", error);
