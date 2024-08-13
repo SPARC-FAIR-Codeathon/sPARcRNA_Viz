@@ -54,8 +54,8 @@ RUN pip3 install pandas
 
 # ------------------------------------------------------------------------------------
 # Copy and set up R script
-COPY --chown=${SC_USER_NAME}:${SC_USER_NAME} src/pipeline/dex.R /home/${SC_USER_NAME}/
-COPY --chown=${SC_USER_NAME}:${SC_USER_NAME} src/astro /home/${SC_USER_NAME}/astro
+COPY --chown=${SC_USER_NAME}:${SC_USER_NAME} src/pipeline/dex.R src/pipeline/json_convert.py /home/${SC_USER_NAME}/
+COPY --chown=${SC_USER_NAME}:${SC_USER_NAME} src/static /home/${SC_USER_NAME}/static
 RUN chmod +x /home/${SC_USER_NAME}/dex.R
 # ------------------------------------------------------------------------------------
 
