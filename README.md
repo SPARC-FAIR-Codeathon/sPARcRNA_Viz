@@ -234,7 +234,7 @@ Please Fork this repository and submit a **Pull Request** to contribute.
 
 ## Cite Us
 
-Please see our [citation](CITATION.cff).
+Samdarshi, M., Soundarajan, S., Simhambhatla, M., Patel, R. C., & Bratton, A. (2024). sPARcRNA_Viz. Zenodo. https://doi.org/10.5281/zenodo.13308297
 
 ## License
 
