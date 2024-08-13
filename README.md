@@ -11,16 +11,16 @@
 - [Research Purpose](#research-purpose)
   - [Introduction](#introduction)
   - [Background](#background)
-  - [Importance of FAIR Data Principles](#importance-of-fair-data-principles)
   - [Current SPARC Portal Tools](#current-sparc-portal-tools)
-  - [The Problem:](#challenge-encountered)
-  - [Our Solution: sPARcRNA_Viz](#our-solution-sparcrna_Viz)
-  - [FAIR-Centered Design](#fair-centered-design)
-  - [Future Vision](#future-vision)
-- [Using sPARcRNA_Viz](#using-sparcrna_Viz)
-  - [sPARcRNA_Viz Requirements](#sparcrna_Viz-requirements)
-  - [sPARcRNA_Viz Workflow](#sparcrna_Viz-workflow)
+  - [The Problem](#the-problem)
+  - [Our Solution: sPARcRNA_Viz](#our-solution-sparcrna_viz)
+- [Using sPARcRNA_Viz](#using-sparcrna_viz)
+  - [sPARcRNA_Viz Requirements](#sparcrna_viz-requirements)
+  - [sPARcRNA_Viz Pipeline Workflow](#sparcrna_viz-pipeline-workflow)
+  - [Configuring sPARcRNA_Viz](#configuring-sparcrna_viz)
   - [Tutorial](#tutorial)
+- [FAIR-Centered Design](#fair-centered-design)
+  - [Importance of FAIR Data Principles](#importance-of-fair-data-principles)
 - [Additional Information](#additional-information)
   - [Issue Reporting](#issue-reporting)
   - [How to Contribute](#how-to-contribute)
@@ -30,34 +30,7 @@
   - [Team](#team)
   - [Materials Cited](#materials-cited)
   - [Acknowledgements](#acknowledgements)
- 
-- [About](#about)
-- [Research Purpose](#research-purpose)
-  - [Introduction](#introduction)
-  - [Background](#background)
-  - [Current SPARC Portal Tools](#current-SPARC-portal-tools)
-  - [The Problem:](#the-problem)
-  - [Our Solution: sPARcRNA_Viz](#our-solution-sparcrna_Viz)
-  - [FAIR-Centered Design](#fair-centered-design)
-  - [Future Vision](#future-vision)
-- [Using sPARcRNA_Viz](#using-sparcrna_Viz)
-  - [sPARcRNA_Viz Requirements](#sparcrna_Viz-requirements)
-  - [sPARcRNA_Viz Pipeline_Workflow](#sparcrna_Viz-pipeline-workflow)
-  - [Configuring sPARcRNA_Viz](#configuring-sPARcRNA_Viz)
-  - [Tutorial](#tutorial)
-  - [Future Vision](#future_vision)
-- [FAIR-Centered Design](#FAIR-centered-design)
-  - [Importance of FAIR Data Principles](#importance-of-FAIR-data-principles)
-  - [Summary of FAIR Principles Application](#summary-of-FAIR-principles-application)
-- [Additional Information](#additional-information)
-  - [Issue Reporting](#issue-reporting)
-  - [How to Contribute](#how-to-contribute)
-  - [Cite Us](#cite-us)
-  - [License](#license)
-  - [FAIR Practices](#fair-practices)
-  - [Team](#team)
-  - [Materials Cited](#materials-cited)
-  - [Acknowledgements](#acknowledgements)
+
 # About
 Easily generate differential expression results from [SPARC](https://sparc.science) scRNA-seq data in a FAIR manner.
 # Research Purpose
@@ -97,7 +70,7 @@ Gene Set Enrichment Analysis (GSEA) is a popular technique for determining stati
 
 ## Current SPARC Portal Tools
 As of 8/12/24, the [Transcriptomic_oSPARC](https://github.com/SPARC-FAIR-Codeathon/Transcriptomic_oSPARC) utility would appear to be the most prominent SPARC tool relating to the analysis gene expression. This tool is very effective in displaying industry-standard static graphical outputs, which can prove quite useful to researchers. However, a limitation may perhaps exist in the current customization level; it may be necessary to edit the code itself to change particular parameters. There was also a niche to explore in adding interactivity to the graphs, further enahncing the user experience.
-## The Problem:
+## The Problem
 The gene expression data in SPARC is somewhat limited and is in a raw data format, making it not as interoperable. Our goal was to make it more interoperable and easy to use. Therefore, our team sought to create a RNA-seq visualization utility that supports the specification of **specific parameters**, as well as **interactivity**. There was also room for experimentation in predicting gene ontology with **GSEA**.
 ## Our Solution: sPARcRNA_Viz
 To address this challenge, we present **sPARcRNA_Viz**, an scRNA-seq visualization tool for potential entry alongside Transcriptomic_oSPARC. In incorporating flexible parameters, interactivity, and an additional DEA metric, sPARcRNA_Viz will complement Transcriptomic_oSPARC as part of a growing SPARC gene expression toolkit.
@@ -148,7 +121,7 @@ sPARcRNA_Viz offers a variety of `make` options:
 | `--gsea_max_size` | Maximum gene set size for GSEA | `500` |
 | `--category` | MSigDB category for GSEA | `"H"` |
 ## Tutorial
-The scRNA-seq data used in the tutorial is from the SPARC Portal.
+The [scRNA-seq data]() used in the tutorial is from the SPARC Portal.
 ### 1. Log in to osparc
 <img width="500" alt="Screenshot 2024-08-12 at 9 36 07 PM" src="https://github.com/user-attachments/assets/5e295cbc-184a-42e9-b85b-8ad82bcc57a0">
 
